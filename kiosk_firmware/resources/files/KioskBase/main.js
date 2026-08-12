@@ -13,12 +13,13 @@ function createWindow () {
         webPreferences: {
             devTools: debug, // DON'T FORGET TO TURN OFF THE DAMN DEVTOOLS!
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            webviewTag: true
         }
     })
 
     if (!debug) {
-        win.webContents.on('before-input-event', (event, input) => {
+        let beforeInputEvent = (event, input) => {
             let isBlocked = false
 
             if (input.code === 'F5' || input.code === 'F11' || input.code === 'F12') {
@@ -36,7 +37,13 @@ function createWindow () {
             if (isBlocked) {
                 event.preventDefault()
             }
-        })
+        }
+
+        win.webContents.on('did-attach-webview', (event, webContents) => {
+            webContents.on('before-input-event', beforeInputEvent);
+        });
+
+        win.webContents.on('before-input-event', beforeInputEvent);
     }
 
     win.once('ready-to-show', () => {
