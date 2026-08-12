@@ -9,6 +9,19 @@ let webview = null
 
 // ----------------------------------------------
 
+function updateDefaultInStore(key, value) {
+    if (!store.has(key)) {
+        store.set(key, value)
+    }
+}
+
+updateDefaultInStore("url", default_url)
+updateDefaultInStore("sessionTemp", false)
+updateDefaultInStore("sessionTimeout", 20000)
+updateDefaultInStore("startSessionTimerOnlyAfterFirstUserInteract", false)
+
+// ----------------------------------------------
+
 let sessionTimeoutId = null
 let sessionTimeoutUrl = null
 let sessionTimeoutSessionTemp = null
@@ -77,10 +90,10 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerO
 
 window.kioskFirstRun = function() {
     kioskRun(
-        store.get("url", default_url),
-        store.get("sessionTemp", false),
-        store.get("sessionTimeout", 20000),
-        store.get("startSessionTimerOnlyAfterFirstUserInteract", false)
+        store.get("url"),
+        store.get("sessionTemp"),
+        store.get("sessionTimeout"),
+        store.get("startSessionTimerOnlyAfterFirstUserInteract")
     )
 }
 

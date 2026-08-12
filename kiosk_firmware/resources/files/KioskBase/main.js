@@ -1,10 +1,15 @@
 let debug = true
+let debug_force = false
 
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-eval(fs.readFileSync(path.join(__dirname, 'utils.js'), 'utf8'));
+if (fs.existsSync("/.kiosk_firmware")) {
+    debug = debug_force
+}
+
+eval(fs.readFileSync(path.join(__dirname, 'utils.js'), 'utf8'))
 
 const Store = globalRequire('electron-store')
 Store.initRenderer()
