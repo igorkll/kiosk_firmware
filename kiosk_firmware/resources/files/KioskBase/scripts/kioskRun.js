@@ -33,12 +33,14 @@ function stopSessionTimer() {
 function runSessionTimer() {
     if (sessionTimeoutCurrent > 0) {
         sessionTimeoutId = setTimeout(() => {
-            kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp)
+            console.log("session timeout! restart kiosk")
+            kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent)
         }, sessionTimeoutCurrent)
     }
 }
 
 function sessionTimeoutReset() {
+    console.log("session timeout reset")
     stopSessionTimer()
     runSessionTimer()
 }
@@ -56,7 +58,7 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout) {
 kioskRun(
     store.get("url", default_url),
     store.get("sessionTemp", false),
-    store.get("sessionTimeout", 0)
+    store.get("sessionTimeout", 5)
 )
 
 }
