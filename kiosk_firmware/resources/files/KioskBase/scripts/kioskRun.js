@@ -45,14 +45,16 @@ function sessionTimeoutReset() {
     runSessionTimer()
 }
 
-window.kioskRun = function (url, sessionTemp, sessionTimeout) {
+window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerOnlyAfterFirstUserInteract) {
     rawRunKiosk(url, sessionTemp)
 
     stopSessionTimer()
     sessionTimeoutUrl = url
     sessionTimeoutSessionTemp = sessionTemp
     sessionTimeoutCurrent = sessionTimeout
-    runSessionTimer()
+    if (!startSessionTimerOnlyAfterFirstUserInteract) {
+        runSessionTimer()
+    }
 }
 
 kioskRun(
