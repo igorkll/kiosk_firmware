@@ -14,14 +14,28 @@ let sessionTimeoutUrl = null
 let sessionTimeoutSessionTemp = null
 let sessionTimeoutCurrent = null
 
+function changeWebviewPartition(newPartition) {
+    const parent = webview.parentNode
+    webview.remove()
+
+    const newWebview = document.createElement('webview')
+    newWebview.partition = newPartition
+
+    parent.appendChild(newWebview)
+
+    webview = newWebview
+}
+
 function rawRunKiosk(url, sessionTemp) {
+    let partition
     if (sessionTemp) {
-        webview.partition = 'persist:kiosk'
+        partition = 'persist:kiosk'
     } else {
-        webview.partition = `temp-${Date.now()}-${Math.random()}`
+        partition = `temp-${Date.now()}-${Math.random()}`
     }
 
-    webview.loadURL(url, { replace: true })
+    changeWebviewPartition(partition)
+    webview.src = url
 }
 
 function stopSessionTimer() {
@@ -46,6 +60,7 @@ function sessionTimeoutReset() {
 }
 
 window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerOnlyAfterFirstUserInteract) {
+    console.log(`run kiosk ${url} ${sessionTemp} ${sessionTimeout} ${startSessionTimerOnlyAfterFirstUserInteract}`)
     rawRunKiosk(url, sessionTemp)
 
     stopSessionTimer()
@@ -60,7 +75,8 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerO
 kioskRun(
     store.get("url", default_url),
     store.get("sessionTemp", false),
-    store.get("sessionTimeout", 5)
+    store.get("sessionTimeout", 5000),
+    store.get("startSessionTimerOnlyAfterFirstUserInteract", false)
 )
 
 }
