@@ -1,0 +1,4 @@
+
+setTimeout(() => {
+    kioskFirstRun()
+}, 100)

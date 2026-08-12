@@ -5,7 +5,7 @@ const default_url = "https://google.com"
 const Store = globalRequire("electron-store")
 const store = new Store()
 
-const webview = document.getElementById("webview")
+let webview = null
 
 // ----------------------------------------------
 
@@ -14,15 +14,16 @@ let sessionTimeoutUrl = null
 let sessionTimeoutSessionTemp = null
 let sessionTimeoutCurrent = null
 
-function changeWebviewPartition(newPartition) {
-    const parent = webview.parentNode
-    webview.remove()
+function recreateWebview(newPartition) {
+    if (webview != null) {
+        webview.remove()
+    }
 
     const newWebview = document.createElement('webview')
+    newWebview.classList.add("webview")
     newWebview.partition = newPartition
 
-    parent.appendChild(newWebview)
-
+    document.body.appendChild(newWebview)
     webview = newWebview
 }
 
@@ -34,7 +35,7 @@ function rawRunKiosk(url, sessionTemp) {
         partition = `temp-${Date.now()}-${Math.random()}`
     }
 
-    changeWebviewPartition(partition)
+    recreateWebview(partition)
     webview.src = url
 }
 
@@ -72,11 +73,13 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerO
     }
 }
 
-kioskRun(
-    store.get("url", default_url),
-    store.get("sessionTemp", false),
-    store.get("sessionTimeout", 5000),
-    store.get("startSessionTimerOnlyAfterFirstUserInteract", false)
-)
+window.kioskFirstRun = function() {
+    kioskRun(
+        store.get("url", default_url),
+        store.get("sessionTemp", false),
+        store.get("sessionTimeout", 5000),
+        store.get("startSessionTimerOnlyAfterFirstUserInteract", true)
+    )
+}
 
 }
