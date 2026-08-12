@@ -27,7 +27,7 @@ function recreateWebview(newPartition) {
     webview = newWebview
 }
 
-function rawRunKiosk(url, sessionTemp) {
+function rawRunKiosk(url=null, sessionTemp=false) {
     let partition
     if (sessionTemp) {
         partition = `temp-${Date.now()}-${Math.random()}`
@@ -36,7 +36,9 @@ function rawRunKiosk(url, sessionTemp) {
     }
 
     recreateWebview(partition)
-    webview.src = url
+    if (url != null) {
+        webview.src = url
+    }
 }
 
 function stopSessionTimer() {
