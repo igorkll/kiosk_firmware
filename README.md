@@ -1,2 +1,2 @@
 # kiosk_firmware
- free open source OS for kiosks
+free open source OS for kiosks  
