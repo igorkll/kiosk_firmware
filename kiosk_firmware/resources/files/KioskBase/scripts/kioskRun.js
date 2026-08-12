@@ -56,7 +56,7 @@ function runSessionTimer() {
     }
 }
 
-function sessionTimeoutReset() {
+window.sessionTimeoutReset = function () {
     console.log("session timeout reset")
     stopSessionTimer()
     runSessionTimer()
