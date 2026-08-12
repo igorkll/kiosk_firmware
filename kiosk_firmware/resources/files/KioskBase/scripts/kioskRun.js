@@ -30,9 +30,9 @@ function recreateWebview(newPartition) {
 function rawRunKiosk(url, sessionTemp) {
     let partition
     if (sessionTemp) {
-        partition = 'persist:kiosk'
-    } else {
         partition = `temp-${Date.now()}-${Math.random()}`
+    } else {
+        partition = 'persist:kiosk'
     }
 
     recreateWebview(partition)
@@ -77,8 +77,8 @@ window.kioskFirstRun = function() {
     kioskRun(
         store.get("url", default_url),
         store.get("sessionTemp", false),
-        store.get("sessionTimeout", 5000),
-        store.get("startSessionTimerOnlyAfterFirstUserInteract", true)
+        store.get("sessionTimeout", 20000),
+        store.get("startSessionTimerOnlyAfterFirstUserInteract", false)
     )
 }
 
