@@ -7,7 +7,7 @@ const store = new Store();
 
 const webview = document.getElementById("webview")
 
-window.kioskRun = function (url, sessionTemp, sessionTimeout) {
+function rawRunKiosk(url, sessionTemp) {
     if (sessionTemp) {
         webview.partition = 'persist:kiosk'
     } else {
@@ -15,6 +15,10 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout) {
     }
 
     webview.loadURL(url, { replace: true })
+}
+
+window.kioskRun = function (url, sessionTemp, sessionTimeout) {
+    rawRunKiosk(url, sessionTemp)
 }
 
 kioskRun(
