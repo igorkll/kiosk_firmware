@@ -8,7 +8,13 @@ const store = new Store();
 const webview = document.getElementById("webview")
 
 window.kioskRun = function (url, sessionTemp, sessionTimeout) {
-    webview
+    if (sessionTemp) {
+        webview.partition = 'persist:kiosk'
+    } else {
+        webview.partition = `temp-${Date.now()}-${Math.random()}`
+    }
+
+    webview.loadURL(url, { replace: true })
 }
 
 kioskRun(
