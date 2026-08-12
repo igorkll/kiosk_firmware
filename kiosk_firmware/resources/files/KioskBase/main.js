@@ -56,7 +56,7 @@ function createWindow () {
         win.show()
     })
 
-    globalShortcut.register('CommandOrControl+Meta+Delete+Shift+S', () => {
+    globalShortcut.register('CommandOrControl+Meta+Shift+S+O', () => {
         win.webContents.send("open-kiosk-setup")
     });
 
