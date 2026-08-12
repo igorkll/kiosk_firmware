@@ -1,5 +1,8 @@
 {
   "name": "KioskBase",
   "version": "1.0.0",
-  "main": "main.js"
+  "main": "main.js",
+  "dependencies": {
+    "electron-store": "^8.2.0"
+  }
 }

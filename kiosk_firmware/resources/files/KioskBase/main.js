@@ -2,6 +2,12 @@ let debug = true
 
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+const fs = require('fs')
+
+eval(fs.readFileSync(path.join(__dirname, 'utils.js'), 'utf8'));
+
+const Store = globalRequire('electron-store')
+Store.initRenderer()
 
 function createWindow () {
     const win = new BrowserWindow({

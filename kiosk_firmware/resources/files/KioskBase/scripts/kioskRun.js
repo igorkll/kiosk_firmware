@@ -3,7 +3,7 @@
 const default_url = "https://google.com"
 
 const Store = globalRequire("electron-store")
-const store = new Store();
+const store = new Store()
 
 const webview = document.getElementById("webview")
 
