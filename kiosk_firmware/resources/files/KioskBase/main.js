@@ -1,6 +1,6 @@
 let debug = true
 
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -55,6 +55,10 @@ function createWindow () {
     win.once('ready-to-show', () => {
         win.show()
     })
+
+    globalShortcut.register('CommandOrControl+Meta+Delete+Shift+S', () => {
+        win.webContents.send("open-kiosk-setup")
+    });
 
     win.loadFile(path.join(__dirname, 'main.html'))
 
