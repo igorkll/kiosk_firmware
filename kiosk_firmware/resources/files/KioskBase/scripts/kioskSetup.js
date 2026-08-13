@@ -7,6 +7,7 @@ function kioskSetup() {
 }
 
 ipcRenderer.on('open-kiosk-setup', (event, data) => {
+    console.log("open kiosk setup event")
     kioskSetup()
 });
 
