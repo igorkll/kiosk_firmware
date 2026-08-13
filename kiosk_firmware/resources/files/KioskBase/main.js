@@ -1,5 +1,5 @@
 let debug = true
-let debug_force = false
+let debug_force = true
 
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const path = require('path')
@@ -12,7 +12,6 @@ if (fs.existsSync("/.kiosk_firmware")) {
 eval(fs.readFileSync(path.join(__dirname, 'utils.js'), 'utf8'))
 
 const Store = globalRequire('electron-store')
-Store.initRenderer()
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -74,4 +73,7 @@ ipcMain.on('quit-app', () => {
     app.quit()
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+    Store.initRenderer()
+    createWindow()
+})
