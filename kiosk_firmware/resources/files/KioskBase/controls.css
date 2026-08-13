@@ -1,0 +1,21 @@
+.controls-close-btn {
+    all: unset;
+    cursor: pointer;
+
+    width: 45px;
+    height: 45px;
+
+    background-color: #9c3900;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.359);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+}
+
+.controls-close-btn:active {
+    background-color: #ee0000;
+}

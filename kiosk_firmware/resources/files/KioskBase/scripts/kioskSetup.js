@@ -31,4 +31,6 @@ setTimeout(() => {
     kioskFirstRun()
 }, 100)
 
+document.getElementById("overlay-close-btn").addEventListener("click", closeKioskSetup)
+
 }
