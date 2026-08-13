@@ -18,7 +18,7 @@ function updateDefaultInStore(key, value) {
 updateDefaultInStore("url", default_url)
 updateDefaultInStore("sessionTemp", false)
 updateDefaultInStore("sessionTimeout", 20000)
-updateDefaultInStore("startSessionTimerOnlyAfterFirstUserInteract", false)
+updateDefaultInStore("startTimerOnInteraction", false)
 
 // ----------------------------------------------
 
@@ -26,6 +26,7 @@ let sessionTimeoutId = null
 let sessionTimeoutUrl = null
 let sessionTimeoutSessionTemp = null
 let sessionTimeoutCurrent = null
+let sessionTimeoutStartTimerOnInteraction = null
 
 function recreateWebview(newPartition) {
     if (webview != null) {
@@ -64,7 +65,7 @@ function runSessionTimer() {
     if (sessionTimeoutCurrent > 0) {
         sessionTimeoutId = setTimeout(() => {
             console.log("session timeout! restart kiosk")
-            kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent)
+            kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent, sessionTimeoutStartTimerOnInteraction)
         }, sessionTimeoutCurrent)
     }
 }
@@ -75,15 +76,16 @@ window.sessionTimeoutReset = function () {
     runSessionTimer()
 }
 
-window.kioskRun = function (url, sessionTemp, sessionTimeout, startSessionTimerOnlyAfterFirstUserInteract) {
-    console.log(`run kiosk ${url} ${sessionTemp} ${sessionTimeout} ${startSessionTimerOnlyAfterFirstUserInteract}`)
+window.kioskRun = function (url, sessionTemp, sessionTimeout, startTimerOnInteraction) {
+    console.log(`run kiosk ${url} ${sessionTemp} ${sessionTimeout} ${startTimerOnInteraction}`)
     rawRunKiosk(url, sessionTemp)
 
     stopSessionTimer()
     sessionTimeoutUrl = url
     sessionTimeoutSessionTemp = sessionTemp
     sessionTimeoutCurrent = sessionTimeout
-    if (!startSessionTimerOnlyAfterFirstUserInteract) {
+    sessionTimeoutStartTimerOnInteraction = startTimerOnInteraction
+    if (!startTimerOnInteraction) {
         runSessionTimer()
     }
 }
@@ -93,7 +95,7 @@ window.kioskFirstRun = function() {
         store.get("url"),
         store.get("sessionTemp"),
         store.get("sessionTimeout"),
-        store.get("startSessionTimerOnlyAfterFirstUserInteract")
+        store.get("startTimerOnInteraction")
     )
 }
 
