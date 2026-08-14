@@ -4,6 +4,7 @@
 
     function user_interaction_trigger() {
         if (codeInWebview) {
+            console.log("QWE")
             kiosk_firmware_internals.user_interaction()
         } else {
             document.dispatchEvent(new CustomEvent('user_interaction'))
@@ -29,7 +30,7 @@
             const speed = Math.sqrt(dx*dx + dy*dy) / dt
 
             if (speed >= MIN_SPEED) {
-                document.dispatchEvent(new CustomEvent('user_interaction'))
+                user_interaction_trigger()
             }
         }
 
@@ -39,7 +40,7 @@
     }
 
     function handleOther(event) {
-        document.dispatchEvent(new CustomEvent('user_interaction'))
+        user_interaction_trigger()
     }
 
     document.addEventListener('mousemove', handlePointerMove)
@@ -48,7 +49,3 @@
     document.addEventListener('keydown', handleOther)
     document.addEventListener('wheel', handleOther)
 }
-
-setInterval(() => {
-    kiosk_firmware_internals.sendToHost('user_interaction')
-}, 1000)
