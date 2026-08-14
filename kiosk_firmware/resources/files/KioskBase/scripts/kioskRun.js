@@ -32,10 +32,14 @@ function recreateWebview(newPartition) {
     newWebview.partition = newPartition
     newWebview.preload="scripts/webview_preload.js"
 
+    newWebview.addEventListener('ipc-message', (event) => {
+        if (event.channel === 'user_interaction') {
+            document.dispatchEvent(new CustomEvent('user_interaction'))
+        }
+    })
+
     newWebview.addEventListener('dom-ready', () => {
-        console.log(user_interaction_code)
         webview.executeJavaScript("codeInWebview = true\n" + user_interaction_code)
-        webview.openDevTools()
     });
 
     document.body.appendChild(newWebview)
@@ -100,8 +104,6 @@ window.kioskFirstRun = function() {
     )
 
     document.addEventListener("user_interaction", sessionTimeoutReset)
-    console.log(ipcMain, storage)
-    ipcMain.on('user_interaction', sessionTimeoutReset)
 }
 
 }

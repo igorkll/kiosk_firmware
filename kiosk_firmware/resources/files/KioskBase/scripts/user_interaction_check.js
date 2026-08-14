@@ -4,7 +4,7 @@
 
     function user_interaction_trigger() {
         if (codeInWebview) {
-            window.ipcRenderer.send('user_interaction');
+            window.ipcRenderer.user_interaction()
         } else {
             document.dispatchEvent(new CustomEvent('user_interaction'))
         }
