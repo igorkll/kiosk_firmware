@@ -1,32 +1,26 @@
 {
 
-const default_url = "https://google.com"
-
-const Store = globalRequire("electron-store")
-const store = new Store()
-
-let webview = null
-
-// ----------------------------------------------
-
 function updateDefaultInStore(key, value) {
     if (!store.has(key)) {
         store.set(key, value)
     }
 }
 
-updateDefaultInStore("url", default_url)
+updateDefaultInStore("url", "https://google.com")
 updateDefaultInStore("sessionTemp", false)
 updateDefaultInStore("sessionTimeout", 20000)
 updateDefaultInStore("startTimerOnInteraction", true)
 
 // ----------------------------------------------
 
+let webview = null
 let sessionTimeoutId = null
 let sessionTimeoutUrl = null
 let sessionTimeoutSessionTemp = null
 let sessionTimeoutCurrent = null
 let sessionTimeoutStartTimerOnInteraction = null
+
+const user_interaction_code = fs.readFileSync(path.join(__dirname, "scripts", "user_interaction_check.js"), "utf8")
 
 function recreateWebview(newPartition) {
     if (webview != null) {
@@ -36,6 +30,13 @@ function recreateWebview(newPartition) {
     const newWebview = document.createElement('webview')
     newWebview.classList.add("webview")
     newWebview.partition = newPartition
+    newWebview.preload="scripts/webview_preload.js"
+
+    newWebview.addEventListener('dom-ready', () => {
+        console.log(user_interaction_code)
+        webview.executeJavaScript("codeInWebview = true\n" + user_interaction_code)
+        webview.openDevTools()
+    });
 
     document.body.appendChild(newWebview)
     webview = newWebview
@@ -97,6 +98,9 @@ window.kioskFirstRun = function() {
         store.get("sessionTimeout"),
         store.get("startTimerOnInteraction")
     )
+
+    document.addEventListener("user_interaction", sessionTimeoutReset)
+    ipcMain.on('user_interaction', sessionTimeoutReset)
 }
 
 }
