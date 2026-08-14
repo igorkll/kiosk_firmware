@@ -82,7 +82,7 @@ function createWindow () {
     }
 
     globalShortcut.register('CommandOrControl+Meta+Shift+S+O', () => {
-        win.webContents.send("open-kiosk-setup")
+        win.webContents.send("open-kiosk-setup-trigger")
     })
 
     win.loadFile(path.join(__dirname, 'main.html'))

@@ -22,10 +22,17 @@ function closeKioskSetup() {
     }, 1000)
 }
 
+function toggleKioskSetup() {
+    if (overlay.classList.contains("overlay-open")) {
+        closeKioskSetup()
+    } else {
+        openKioskSetup()
+    }
+}
+
 ipcRenderer.on('open-kiosk-setup', (event, data) => {
-    console.log("open kiosk setup event")
-    openKioskSetup()
-});
+    toggleKioskSetup()
+})
 
 setTimeout(() => {
     kioskFirstRun()

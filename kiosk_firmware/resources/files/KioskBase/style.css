@@ -36,6 +36,8 @@ body {
     display: none;
     transform: translate(-50%, -50%) scaleX(0);
     transition: transform 1s ease-in-out;
+
+    z-index: 1000;
 }
 
 .overlay-open {
