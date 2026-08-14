@@ -1,14 +1,13 @@
 const path = require('path')
 const fs = require('fs')
-const { app } = require('electron')
+const { app, ipcMain } = require('electron')
 const { exec, execSync } = require('child_process')
-const { ipcMain } = require('electron')
 
 const globalNodeModules = execSync('npm root -g').toString().trim()
 const startTime = Date.now()
 
 const Store = globalRequire("electron-store")
-const store = new Store()
+const storage = new Store()
 
 codeInWebview = false
 

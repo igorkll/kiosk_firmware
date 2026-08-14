@@ -1,8 +1,8 @@
 {
 
 function updateDefaultInStore(key, value) {
-    if (!store.has(key)) {
-        store.set(key, value)
+    if (!storage.has(key)) {
+        storage.set(key, value)
     }
 }
 
@@ -93,13 +93,14 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout, startTimerOnIntera
 
 window.kioskFirstRun = function() {
     kioskRun(
-        store.get("url"),
-        store.get("sessionTemp"),
-        store.get("sessionTimeout"),
-        store.get("startTimerOnInteraction")
+        storage.get("url"),
+        storage.get("sessionTemp"),
+        storage.get("sessionTimeout"),
+        storage.get("startTimerOnInteraction")
     )
 
     document.addEventListener("user_interaction", sessionTimeoutReset)
+    console.log(ipcMain, storage)
     ipcMain.on('user_interaction', sessionTimeoutReset)
 }
 
