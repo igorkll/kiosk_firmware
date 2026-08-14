@@ -18,7 +18,7 @@ function updateDefaultInStore(key, value) {
 updateDefaultInStore("url", default_url)
 updateDefaultInStore("sessionTemp", false)
 updateDefaultInStore("sessionTimeout", 20000)
-updateDefaultInStore("startTimerOnInteraction", false)
+updateDefaultInStore("startTimerOnInteraction", true)
 
 // ----------------------------------------------
 
