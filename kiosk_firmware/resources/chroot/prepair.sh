@@ -3,7 +3,7 @@ set -e
 
 mkdir -p /etc/acpi/events
 cat > "/etc/acpi/events/powerbtn-custom" <<EOF
-event=button/power.*
+event=button/power PBTN
 action=/KioskBase/open_kiosk_setup.sh
 EOF
 
