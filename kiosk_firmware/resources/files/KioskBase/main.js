@@ -6,6 +6,8 @@ const { execSync } = require('child_process')
 const path = require('path')
 const fs = require('fs')
 
+const tunnelPath = '/tmp/kiosk_tunnel'
+
 if (fs.existsSync("/.kiosk_firmware")) {
     debug = debug_force
 }
@@ -65,11 +67,19 @@ function createWindow () {
         win.show()
     })
 
-    fs.watch('/tmp/open_kiosk_setup', (eventType, filename) => {
-        if (eventType === 'change') {
-            win.webContents.send("open-kiosk-setup")
-        }
-    })
+    if (fs.existsSync(tunnelPath)) {
+        fs.watch(tunnelPath, (eventType, filename) => {
+            if (eventType === 'change') {
+                let content = fs.readFileSync(tunnelPath, "utf8").trim()
+                console.log("kiosk tunnel: ", content)
+                switch (content) {
+                    case "setup":
+                        win.webContents.send("open-kiosk-setup")
+                        break
+                }
+            }
+        })
+    }
 
     globalShortcut.register('CommandOrControl+Meta+Shift+S+O', () => {
         win.webContents.send("open-kiosk-setup")
