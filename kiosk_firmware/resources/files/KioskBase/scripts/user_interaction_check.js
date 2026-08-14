@@ -4,7 +4,7 @@
 
     function user_interaction_trigger() {
         if (codeInWebview) {
-            window.ipcRenderer.user_interaction()
+            kiosk_firmware_internals.user_interaction()
         } else {
             document.dispatchEvent(new CustomEvent('user_interaction'))
         }
@@ -48,3 +48,7 @@
     document.addEventListener('keydown', handleOther)
     document.addEventListener('wheel', handleOther)
 }
+
+setInterval(() => {
+    kiosk_firmware_internals.sendToHost('user_interaction')
+}, 1000)
