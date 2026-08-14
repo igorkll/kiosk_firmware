@@ -3,7 +3,12 @@ const fs = require('fs')
 const { app } = require('electron')
 const { exec, execSync } = require('child_process');
 
-const globalNodeModules = execSync('npm root -g').toString().trim();
+const globalNodeModules = execSync('npm root -g').toString().trim()
+const startTime = Date.now()
+
+function getUptimeMs() {
+    return Date.now() - startTime
+}
 
 function globalRequire(name) {
     return require(path.join(globalNodeModules, name))
