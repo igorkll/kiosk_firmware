@@ -23,3 +23,24 @@ function mergeTables(tbl, def) {
         }
     }
 }
+
+function keyHoldTrigger(callback, triggerActiveTime=5000, triggerResetTime=150) {
+    let lastTriggerTimeMs = null
+    let lastTriggerResetedTimeMs = null
+
+    return () => {
+        console.log(lastTriggerTimeMs, lastTriggerResetedTimeMs)
+        let currentTime = getUptimeMs()
+
+        if (lastTriggerResetedTimeMs == null || currentTime - lastTriggerTimeMs > triggerResetTime) {
+            lastTriggerResetedTimeMs = currentTime
+        }
+
+        if (currentTime - lastTriggerResetedTimeMs > triggerActiveTime) {
+            callback()
+            lastTriggerResetedTimeMs = null
+        }
+
+        lastTriggerTimeMs = currentTime
+    }
+}

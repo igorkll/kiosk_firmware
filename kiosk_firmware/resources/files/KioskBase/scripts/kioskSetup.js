@@ -40,20 +40,8 @@ function toggleKioskSetup() {
     }
 }
 
-ipcRenderer.on('open-kiosk-setup', (event, data) => {
-    toggleKioskSetup()
-})
-
-{
-    const triggerResetTime = 150
-    let lastTriggerTimeMs = null
-
-    ipcRenderer.on('open-kiosk-setup-trigger', (event, data) => {
-        let currentTime = getUptimeMs()
-
-        lastTriggerTimeMs = currentTime
-    })
-}
+ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)
+ipcRenderer.on('open-kiosk-setup-trigger', keyHoldTrigger(toggleKioskSetup))
 
 setTimeout(() => {
     kioskFirstRun()
