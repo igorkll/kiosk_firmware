@@ -40,7 +40,6 @@ function recreateWebview(newPartition) {
 
     newWebview.addEventListener('dom-ready', () => {
         webview.executeJavaScript("codeInWebview = true\n" + user_interaction_code)
-        webview.openDevTools()
     });
 
     document.body.appendChild(newWebview)

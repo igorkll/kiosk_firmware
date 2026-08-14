@@ -4,7 +4,6 @@
 
     function user_interaction_trigger() {
         if (codeInWebview) {
-            console.log("QWE")
             kiosk_firmware_internals.user_interaction()
         } else {
             document.dispatchEvent(new CustomEvent('user_interaction'))
