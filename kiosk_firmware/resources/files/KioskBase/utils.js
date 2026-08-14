@@ -29,7 +29,6 @@ function keyHoldTrigger(callback, triggerActiveTime=5000, triggerResetTime=150) 
     let lastTriggerResetedTimeMs = null
 
     return () => {
-        console.log(lastTriggerTimeMs, lastTriggerResetedTimeMs)
         let currentTime = getUptimeMs()
 
         if (lastTriggerResetedTimeMs == null || currentTime - lastTriggerTimeMs > triggerResetTime) {
