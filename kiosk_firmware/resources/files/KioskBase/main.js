@@ -81,7 +81,7 @@ function createWindow () {
         })
     }
 
-    globalShortcut.register('CommandOrControl+Meta+Shift+S+O', () => {
+    globalShortcut.register('CommandOrControl+Meta+Shift+S', () => {
         win.webContents.send("open-kiosk-setup-trigger")
     })
 
