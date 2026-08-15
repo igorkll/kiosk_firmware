@@ -9,4 +9,12 @@ function setLoadingProcessState(state) {
 updateDefaultInStorage("checkInternetEnable", true)
 updateDefaultInStorage("checkInternetUrl", "https://google.com")
 
+window.updateLoadingProcessState = function() {
+    if (storage.checkInternetEnable) {
+
+    } else {
+        
+    }
+}
+
 }
