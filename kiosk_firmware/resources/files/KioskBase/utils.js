@@ -28,17 +28,11 @@ function globalRequire(name) {
     return require(path.join(globalNodeModules, name))
 }
 
-async function globalImport(moduleName) {
-    // 1. Определяем путь к модулю
-    const modulePath = path.join(globalNodeModules, moduleName);
-    // 2. Пытаемся найти основной файл через require.resolve (если модуль поддерживает CommonJS)
-    //    Но для ESM лучше сначала проверить package.json
-    const pkgPath = path.join(modulePath, 'package.json');
-    let mainFile = 'index.js'; // по умолчанию
+function getPackageMainFile(pkgPath) {
+    let mainFile = 'index.js';
     try {
-        const pkg = require(pkgPath); // читаем package.json (синхронно, но можно и fs.readFile)
+        const pkg = require(pkgPath)
         if (pkg.exports) {
-            // Если есть exports, используем первый экспорт (например, "." -> "./index.js")
             const exp = pkg.exports['.'] || pkg.exports;
             if (typeof exp === 'string') {
                 mainFile = exp;
@@ -51,84 +45,79 @@ async function globalImport(moduleName) {
             mainFile = pkg.main;
         }
     } catch (e) {
-        // Если package.json нет, используем index.js
     }
-    const fullPath = path.join(modulePath, mainFile);
-    // 3. Преобразуем путь в URL (для Windows нужно добавить префикс file://)
+    return mainFile
+}
+
+async function globalImport(moduleName) {
+    const modulePath = path.join(globalNodeModules, moduleName);
+    const pkgPath = path.join(modulePath, 'package.json');
+    const mainFile = getPackageMainFile(pkgPath)
+    const fullPath = path.join(modulePath, mainFile)
     const url = pathToFileURL(fullPath).href;
     return await import(url)
 }
 
 function syncGlobalImport(moduleName) {
-    // 1. Получаем путь к глобальным модулям
-    const globalNodeModules = execSync('npm root -g').toString().trim();
-    // Экранируем обратные слеши для Windows (чтобы работало в строке)
-    const globalPath = globalNodeModules.replace(/\\/g, '\\\\');
+    const modulePath = path.join(globalNodeModules, moduleName);
+    const pkgPath = path.join(modulePath, 'package.json');
+    let mainFile = 'index.js';
 
-    // 2. Формируем скрипт для выполнения в отдельном процессе
-    const script = `
-        const { pathToFileURL } = require('url');
-        const path = require('path');
-        const fs = require('fs');
+    try {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+        if (pkg.exports) {
+            const exp = pkg.exports['.'] || pkg.exports;
+            if (typeof exp === 'string') mainFile = exp;
+            else if (typeof exp === 'object' && exp.import) mainFile = exp.import;
+            else mainFile = exp?.default || 'index.js';
+        } else if (pkg.main) {
+            mainFile = pkg.main;
+        }
+    } catch (_) {}
 
-        const globalNodeModules = '${globalPath}';
-        const moduleName = '${moduleName}';
+    const fullPath = path.join(modulePath, mainFile);
+    const url = pathToFileURL(fullPath).href;
 
-        const modulePath = path.join(globalNodeModules, moduleName);
-        const pkgPath = path.join(modulePath, 'package.json');
-        let mainFile = 'index.js';
+    return new Proxy({}, {
+        get(target, prop) {
+            return function(...args) {
+                const argsStr = args.map(arg => {
+                    if (typeof arg === 'string') return `'${arg.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+                    if (typeof arg === 'number' || typeof arg === 'boolean' || arg === null) return String(arg);
+                    if (arg === undefined) return 'undefined';
+                    return JSON.stringify(arg);
+                }).join(', ');
 
-        try {
-            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-            if (pkg.exports) {
-                const exp = pkg.exports['.'] || pkg.exports;
-                if (typeof exp === 'string') {
-                    mainFile = exp;
-                } else if (typeof exp === 'object' && exp.import) {
-                    mainFile = exp.import;
-                } else {
-                    mainFile = exp?.default || 'index.js';
+                const script = `
+                    import('${url}').then(mod => {
+                        if (typeof mod.${prop} !== 'function') {
+                            console.error('Method ${prop} not function');
+                            process.exit(1);
+                        }
+                        const result = mod.${prop}(${argsStr});
+                        console.log(JSON.stringify(result));
+                    }).catch(err => {
+                        console.error(err);
+                        process.exit(1);
+                    });
+                `;
+
+                try {
+                    const output = execSync(`node --input-type=module -e "${script}"`, {
+                        encoding: 'utf8',
+                        stdio: ['pipe', 'pipe', 'pipe']
+                    });
+                    return JSON.parse(output.trim());
+                } catch (error) {
+                    throw new Error(`Call error ${moduleName}.${prop}: ${error.stderr || error.message}`);
                 }
-            } else if (pkg.main) {
-                mainFile = pkg.main;
-            }
-        } catch (_) {}
-
-        const fullPath = path.join(modulePath, mainFile);
-        const url = pathToFileURL(fullPath).href;
-
-        import(url)
-            .then(mod => {
-                // Выводим только JSON-сериализуемую часть
-                // Для модулей с функциями это не сработает!
-                console.log(JSON.stringify(mod));
-            })
-            .catch(err => {
-                console.error(err);
-                process.exit(1);
-            });
-    `;
-
-    // 3. Запускаем скрипт как ESM-модуль
-    let output;
-    try {
-        output = execSync(`node --input-type=module -e "${script}"`, {
-            encoding: 'utf8',
-            stdio: ['pipe', 'pipe', 'pipe'], // чтобы stderr не смешивался
-        });
-    } catch (error) {
-        throw new Error(`Ошибка при импорте модуля ${moduleName}: ${error.stderr || error.message}`);
-    }
-
-    // 4. Парсим результат
-    try {
-        return JSON.parse(output);
-    } catch (e) {
-        throw new Error(`Не удалось распарсить JSON для модуля ${moduleName}: ${output}`);
-    }
+            };
+        }
+    });
 }
 
 const change_case = syncGlobalImport('change-case')
+console.log(change_case)
 
 function mergeTables(tbl, def) {
     for (let key in def) {
