@@ -53,6 +53,7 @@ async function globalImport(moduleName) {
     const modulePath = path.join(globalNodeModules, moduleName);
     const pkgPath = path.join(modulePath, 'package.json');
     const mainFile = getPackageMainFile(pkgPath)
+    
     const fullPath = path.join(modulePath, mainFile)
     const url = pathToFileURL(fullPath).href;
     return await import(url)
@@ -61,7 +62,7 @@ async function globalImport(moduleName) {
 function syncGlobalImport(moduleName) {
     const modulePath = path.join(globalNodeModules, moduleName);
     const pkgPath = path.join(modulePath, 'package.json');
-    let mainFile = 'index.js';
+    const mainFile = getPackageMainFile(pkgPath)
 
     try {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
