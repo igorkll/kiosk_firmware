@@ -1,6 +1,6 @@
 {
 
-window.tab_create = function(parameter, onChangeCallback=null, min, max) {
+window.tab_createInput = function(container, parameter, onChangeCallback=null, min, max) {
     let type = typeof(storage.get(parameter))
 
     let inputObjectType
@@ -18,10 +18,12 @@ window.tab_create = function(parameter, onChangeCallback=null, min, max) {
             break;
     }
 
-    const checkbox = document.createElement('input')
-    checkbox.type = inputObjectType
-    checkbox.value = 'on'
-    document.body.appendChild(checkbox)
+    const inputObject = document.createElement('input')
+    inputObject.type = inputObjectType
+    inputObject.value = 'on'
+    document.body.appendChild(inputObject)
+
+    container.appendChild(inputObject)
 }
 
 }
