@@ -23,22 +23,12 @@ async function checkInternet() {
     }
 }
 
-function updateKioskState(state) {
-    if (state) {
-        kioskAutoRun()
-        setWebviewShowState(true)
-    } else {
-        setWebviewShowState(false)
-        kioskStop()
-    }
-}
-
 async function updateInternetStatus() {
-    const nowHas = true
+    const nowHas = await checkInternet()
 
     if (nowHas !== hasInternet) {
         hasInternet = nowHas
-        updateKioskState(hasInternet)
+        setKioskState(hasInternet)
     }
 }
 
@@ -53,7 +43,7 @@ window.updateLoadingProcess = function() {
     if (storage.get("checkInternetEnable")) {
         if (storage.get("url").startsWith("file:")) {
             console.log("show webview for file")
-            updateKioskState(true)
+            setKioskState(true)
         } else {
             console.log("check internet enable. start interval")
             updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer"))
@@ -61,7 +51,7 @@ window.updateLoadingProcess = function() {
         }
     } else {
         console.log("check internet disabled")
-        updateKioskState(true)
+        setKioskState(true)
     }
 }
 

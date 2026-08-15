@@ -28,6 +28,16 @@ window.setWebviewShowState = function(state) {
     loading_process.style.display = state ? "none" : "flex"
 }
 
+window.setKioskState = function(state) {
+    if (state) {
+        kioskAutoRun()
+        setWebviewShowState(true)
+    } else {
+        setWebviewShowState(false)
+        kioskStop()
+    }
+}
+
 window.recreateWebview = function(newPartition=null) {
     if (newPartition == null) newPartition = webview.partition
     if (webview != null) webview.remove()
