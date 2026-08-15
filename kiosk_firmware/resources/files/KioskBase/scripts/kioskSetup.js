@@ -27,15 +27,17 @@ function openKioskSetup() {
 function closeKioskSetup() {
     console.log("close kiosk setup")
     overlay.classList.remove("overlay-open2")
-    closeKioskTimer = setTimeout(() => {
-        closeKioskTimer = null
-        overlay.classList.remove("overlay-open")
-        overlay.classList.remove("overlay-open2")
-    }, 1000)
+    if (closeKioskTimer != null) {
+        closeKioskTimer = setTimeout(() => {
+            closeKioskTimer = null
+            overlay.classList.remove("overlay-open")
+            overlay.classList.remove("overlay-open2")
+        }, 1000)
+    }
 }
 
 function toggleKioskSetup() {
-    if (overlay.classList.contains("overlay-open")) {
+    if (overlay.classList.contains("overlay-open2")) {
         closeKioskSetup()
     } else {
         openKioskSetup()
@@ -72,10 +74,16 @@ window.addKioskSetupTab = function(name, tab) {
     tab.active_button = button
     overlay_tabs.appendChild(tab)
     allTabs.push(tab)
+
+    if (allTabs.length == 1) {
+        selectKioskSetupTab(0)
+    }
 }
 
 window.createTab = function() {
-    return document.createElement("div")
+    let tab = document.createElement("div")
+    tab.classList.add("tab")
+    return tab
 }
 
 ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)

@@ -12,6 +12,9 @@ body {
     margin: 0;
     background-color: black;
     position: relative;
+
+    font-size: 25px;
+    text-shadow: 0px 0px 2px black;
 }
 
 .webview {
