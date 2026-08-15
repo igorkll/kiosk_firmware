@@ -11,7 +11,7 @@ async function checkInternet() {
     try {
         const controller = new AbortController()
         const timeoutId = setTimeout(() => controller.abort(), storage.get("checkInternetTimeout"))
-        const response = await fetch(checkUrl, {
+        const response = await fetch(storage.get("checkInternetUrl"), {
             method: "HEAD",
             signal: controller.signal,
             mode: "no-cors"
