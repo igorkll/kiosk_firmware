@@ -1,12 +1,15 @@
 {
 
-window.tab_createInput = function(container, parameter, onChangeCallback=null, min, max) {
-    let type = typeof(storage.get(parameter))
+window.tab_createInput = async function(container, parameter, onChangeCallback=null, min, max) {
+    const changeCase = await globalImport('change-case')
+
+    let parameterValue = storage.get(parameter)
+    let parameterType = typeof(parameterValue)
 
     let inputObjectType
-    switch (type) {
+    switch (parameterType) {
         case "number":
-            inputObjectType = "checkbox"
+            inputObjectType = "number"
             break;
 
         case "boolean":
@@ -18,12 +21,31 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
             break;
     }
 
+    const labelObject = document.createElement('label')
+    labelObject.textContent = await changeCase.capitalCase(parameter)
+
     const inputObject = document.createElement('input')
     inputObject.type = inputObjectType
-    inputObject.value = 'on'
-    document.body.appendChild(inputObject)
+    switch (parameterType) {
+        case "number":
+            inputObject.valueAsNumber = parameterValue
+            break;
 
-    container.appendChild(inputObject)
+        case "boolean":
+            inputObject.checked = parameterValue
+            break;
+
+        case "string":
+            inputObject.value = parameterValue
+            break;
+    }
+    
+    const parameterLine = document.createElement('div')
+    parameterLine.classList.add("line-container")
+    parameterLine.appendChild(inputObject)
+    parameterLine.appendChild(labelObject)
+
+    container.appendChild(parameterLine)
 }
 
 }
