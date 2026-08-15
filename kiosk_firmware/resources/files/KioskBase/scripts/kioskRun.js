@@ -2,7 +2,7 @@
 
 updateDefaultInStorage("url", "https://google.com")
 updateDefaultInStorage("sessionTemp", false)
-updateDefaultInStorage("sessionTimeout", 20000)
+updateDefaultInStorage("sessionTimeout", 60)
 updateDefaultInStorage("startTimerOnInteraction", true)
 
 // ----------------------------------------------
@@ -91,7 +91,7 @@ function runSessionTimer() {
         sessionTimeoutId = setTimeout(() => {
             console.log("session timeout! restart kiosk")
             kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent, sessionTimeoutStartTimerOnInteraction)
-        }, sessionTimeoutCurrent)
+        }, sessionTimeoutCurrent * 1000)
     }
 }
 
