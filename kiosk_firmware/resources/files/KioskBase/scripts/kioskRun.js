@@ -23,7 +23,7 @@ let webviewShowState = false
 window.setWebviewShowState = function(state) {
     console.log("setWebviewShowState", state)
     webviewShowState = state
-    if (webview != null) webview.style.display = state ? "" : "none"
+    if (webview != null) webview.style.display = state ? "flex" : "none"
     document.body.style.cursor = state ? "" : "none"
     loading_process.style.display = state ? "none" : "flex"
 }
@@ -36,7 +36,7 @@ window.recreateWebview = function(newPartition=null) {
     newWebview.classList.add("webview")
     newWebview.partition = newPartition
     newWebview.preload="scripts/webview_preload.js"
-    newWebview.style.display = webviewShowState ? "" : "none"
+    newWebview.style.display = webviewShowState ? "flex" : "none"
 
     newWebview.addEventListener('ipc-message', (event) => {
         if (event.channel === 'user_interaction') {
