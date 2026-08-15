@@ -1,8 +1,43 @@
+.overlay {
+    background-color: #6d6d6d2f;
+    backdrop-filter: blur(5px);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 0, 0, 0.359);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.604);
+    padding: 15px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 400px;
+
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 8px;
+
+    transform: translate(-50%, -50%) scaleX(0);
+    transition: transform 1s ease-in-out;
+
+    z-index: 1000;
+}
+
+.overlay-open {
+    display: flex;
+}
+
+.overlay-open2 {
+    transform: translate(-50%, -50%) scaleX(100%);
+}
+
 .line-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    gap: 8px;
 }
 
 .fill-container {
@@ -38,4 +73,23 @@
 
 .controls-close-btn:active {
     background-color: #ee0000;
+}
+
+.tab-button {
+    all: unset;
+    cursor: pointer;
+
+    height: 45px;
+
+    background-color: #6565657b;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.359);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+
+    flex: 1;
 }
