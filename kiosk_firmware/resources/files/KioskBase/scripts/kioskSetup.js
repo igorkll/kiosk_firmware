@@ -3,6 +3,8 @@
 const { ipcRenderer } = require('electron')
 
 const overlay = document.getElementById("overlay")
+const overlay_buttons = document.getElementById("overlay-buttons")
+const overlay_tabs = document.getElementById("overlay-tabs")
 
 let closeKioskTimer = null
 function openKioskSetup() {
@@ -38,6 +40,18 @@ function toggleKioskSetup() {
     } else {
         openKioskSetup()
     }
+}
+
+let allTabs = []
+window.addKioskSetupTab = function(name, tab) {
+    let button = document.createElement("button")
+    button.classList.add("tab-button")
+    button.textContent = name
+    overlay_buttons.appendChild(button)
+
+    tab.style.display = 'none'
+    overlay_tabs.appendChild(tab)
+    allTabs.push(tab)
 }
 
 ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)
