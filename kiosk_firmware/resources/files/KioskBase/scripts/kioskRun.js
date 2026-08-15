@@ -16,7 +16,13 @@ let sessionTimeoutStartTimerOnInteraction = null
 
 const user_interaction_code = fs.readFileSync(path.join(__dirname, "scripts", "user_interaction_check.js"), "utf8")
 
+const loading_process = document.getElementById("loading-process")
+
+let webviewShowState = false
+
 window.setWebviewShowState = function(state) {
+    console.log("setWebviewShowState", state)
+    webviewShowState = state
     webview.style.display = state ? "" : "none"
     document.body.style.cursor = state ? "" : "none"
     loading_process.style.display = state ? "none" : "flex"
@@ -30,6 +36,7 @@ window.recreateWebview = function(newPartition=null) {
     newWebview.classList.add("webview")
     newWebview.partition = newPartition
     newWebview.preload="scripts/webview_preload.js"
+    newWebview.style.display = webviewShowState ? "" : "none"
 
     newWebview.addEventListener('ipc-message', (event) => {
         if (event.channel === 'user_interaction') {

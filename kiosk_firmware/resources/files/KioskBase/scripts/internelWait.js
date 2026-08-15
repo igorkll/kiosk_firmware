@@ -10,7 +10,7 @@ let hasInternet = false
 async function checkInternet() {
     try {
         const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), checkTimeout)
+        const timeoutId = setTimeout(() => controller.abort(), storage.get("checkInternetTimeout"))
         const response = await fetch(checkUrl, {
             method: "HEAD",
             signal: controller.signal,
@@ -24,7 +24,7 @@ async function checkInternet() {
 }
 
 async function updateInternetStatus() {
-    const nowHas = await checkInternet()
+    const nowHas = false
 
     if (nowHas !== hasInternet) {
         hasInternet = nowHas
@@ -45,14 +45,17 @@ window.updateLoadingProcess = function() {
         updateInternetStatusIntervalId = null
     }
 
-    if (storage.checkInternetEnable) {
-        if (storage.url.startsWith("file:")) {
+    if (storage.get("checkInternetEnable")) {
+        if (storage.get("url").startsWith("file:")) {
+            console.log("show webview for file")
             setWebviewShowState(true)
         } else {
-            updateInternetStatusIntervalId = setInterval(updateInternetStatus, checkPeriod)
+            console.log("check internet enable. start interval")
+            updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer"))
             updateInternetStatus()
         }
     } else {
+        console.log("check internet disabled")
         setWebviewShowState(true)
     }
 }
