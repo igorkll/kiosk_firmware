@@ -57,6 +57,8 @@ window.selectKioskSetupTab = function(index) {
     let tab = allTabs[index]
     tab.style.display = ""
     tab.active_button.classList.add("tab-button-selected")
+    
+    oldActiveTabIndex = index
 }
 
 let lastIndex = 0
