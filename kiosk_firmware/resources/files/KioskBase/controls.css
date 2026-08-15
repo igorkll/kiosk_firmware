@@ -70,6 +70,7 @@
     align-items: center;
 
     color: #ffffff;
+    transition: background-color 0.2s ease;
 }
 
 .controls-close-btn:active {
@@ -93,6 +94,7 @@
     color: #ffffff;
 
     flex: 1;
+    transition: background-color 0.2s ease;
 }
 
 .tab-button:active {

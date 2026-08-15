@@ -6,6 +6,8 @@ const { execSync } = require('child_process')
 const path = require('path')
 const fs = require('fs')
 
+app.commandLine.appendSwitch('enable-features', 'GlobalShortcutsPortal')
+
 const tunnelPath = '/tmp/kiosk_tunnel'
 
 if (fs.existsSync("/.kiosk_firmware")) {

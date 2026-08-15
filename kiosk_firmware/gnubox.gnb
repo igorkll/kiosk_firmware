@@ -23,7 +23,9 @@
     "libgbm1",
     "libgtk-3-0",
     "nano",
-    "acpid"
+    "acpid",
+    "xdg-desktop-portal",
+    "xdg-desktop-portal-gtk"
   ],
   "exclude_packages": [],
   "debian_variant": "minbase",

@@ -43,6 +43,11 @@ function toggleKioskSetup() {
 }
 
 let allTabs = []
+
+window.selectKioskSetupTab = function() {
+    
+}
+
 window.addKioskSetupTab = function(name, tab) {
     let button = document.createElement("button")
     button.classList.add("tab-button")
