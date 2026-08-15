@@ -41,7 +41,12 @@ function toggleKioskSetup() {
 }
 
 ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)
-ipcRenderer.on('open-kiosk-setup-trigger', keyHoldTrigger(toggleKioskSetup))
+
+const keyHoldTriggerCallback = keyHoldTrigger(toggleKioskSetup)
+ipcRenderer.on('open-kiosk-setup-trigger', () => {
+    console.log("open-kiosk-setup trigger")
+    keyHoldTriggerCallback()
+})
 
 setTimeout(() => {
     kioskFirstRun()
