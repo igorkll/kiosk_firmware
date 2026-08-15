@@ -1,17 +1,16 @@
 {
 
-const tab_website = createTab()
+const tab = createTab()
 
 function updateValue() {
-    kioskStop()
-    kioskAutoRun()
+    reloadKiosk()
 }
 
-tab_createInput(tab_website, "url", updateValue)
-tab_createInput(tab_website, "sessionTemp", updateValue)
-tab_createInput(tab_website, "sessionTimeout", updateValue)
-tab_createInput(tab_website, "startTimerOnInteraction", updateValue)
+tab_createInput(tab, "url", updateValue)
+tab_createInput(tab, "sessionTemp", updateValue)
+tab_createInput(tab, "sessionTimeout", updateValue)
+tab_createInput(tab, "startTimerOnInteraction", updateValue)
 
-addKioskSetupTab("Website", tab_website)
+addKioskSetupTab("Website", tab)
 
 }

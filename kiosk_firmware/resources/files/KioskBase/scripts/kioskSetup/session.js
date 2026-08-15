@@ -1,7 +1,11 @@
 {
 
-const tab_website = createTab()
+const tab = createTab()
 
-addKioskSetupTab("Session", tab_website)
+function updateValue() {
+    
+}
+
+addKioskSetupTab("Session", tab)
 
 }

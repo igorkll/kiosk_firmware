@@ -1,7 +1,16 @@
 {
 
-const tab_website = createTab()
+const tab = createTab()
 
-addKioskSetupTab("Check internet", tab_website)
+function updateValue() {
+    updateLoadingProcess()
+}
+
+tab_createInput(tab, "checkInternetEnable", updateValue)
+tab_createInput(tab, "checkInternetUrl", updateValue)
+tab_createInput(tab, "checkInternetPeriodTimer", updateValue)
+tab_createInput(tab, "checkInternetTimeout", updateValue)
+
+addKioskSetupTab("Check internet", tab)
 
 }

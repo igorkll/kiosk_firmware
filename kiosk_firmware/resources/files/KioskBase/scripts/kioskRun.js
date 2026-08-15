@@ -19,6 +19,7 @@ const user_interaction_code = fs.readFileSync(path.join(__dirname, "scripts", "u
 const loading_process = document.getElementById("loading-process")
 
 let webviewShowState = false
+let kioskState = false
 
 window.setWebviewShowState = function(state) {
     console.log("setWebviewShowState", state)
@@ -29,6 +30,8 @@ window.setWebviewShowState = function(state) {
 }
 
 window.setKioskState = function(state) {
+    console.log("setKioskState", state)
+    kioskState = state
     if (state) {
         kioskAutoRun()
         setWebviewShowState(true)
@@ -36,6 +39,11 @@ window.setKioskState = function(state) {
         setWebviewShowState(false)
         kioskStop()
     }
+}
+
+window.reloadKiosk = function() {
+    kioskStop()
+    if (kioskState) kioskAutoRun()
 }
 
 window.recreateWebview = function(newPartition=null) {
