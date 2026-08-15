@@ -59,13 +59,17 @@ window.selectKioskSetupTab = function(index) {
     tab.active_button.classList.add("tab-button-selected")
 }
 
+let lastIndex = 0
 window.addKioskSetupTab = function(name, tab) {
     let button = document.createElement("button")
     button.classList.add("tab-button")
     button.textContent = name
-    overlay_buttons.appendChild(button)
+    
+    const index = lastIndex
+    lastIndex++
 
-    const index = allTabs.length
+    insertAt(overlay_buttons, button, index)
+    
     button.addEventListener("click", () => {
         selectKioskSetupTab(index)
     })

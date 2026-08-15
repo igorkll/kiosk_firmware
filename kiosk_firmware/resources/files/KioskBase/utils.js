@@ -54,3 +54,8 @@ function keyHoldTrigger(callback, triggerActiveTime=5000, triggerResetTime=150) 
         lastTriggerTimeMs = currentTime
     }
 }
+
+function insertAt(parent, newElement, index) {
+    const reference = parent.children[index] || null;
+    parent.insertBefore(newElement, reference);
+}
