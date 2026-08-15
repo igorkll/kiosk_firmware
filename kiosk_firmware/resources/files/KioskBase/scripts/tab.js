@@ -46,6 +46,22 @@ window.tab_createInput = async function(container, parameter, onChangeCallback=n
     parameterLine.appendChild(labelObject)
 
     container.appendChild(parameterLine)
+
+    inputObject.addEventListener("change", () => {
+        switch (parameterType) {
+            case "number":
+                storage.set(parameter, inputObject.valueAsNumber)
+                break;
+    
+            case "boolean":
+                storage.set(parameter, inputObject.checked)
+                break;
+    
+            case "string":
+                storage.set(parameter, inputObject.value)
+                break;
+        }
+    })
 }
 
 }
