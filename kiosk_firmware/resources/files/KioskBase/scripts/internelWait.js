@@ -5,7 +5,7 @@ updateDefaultInStorage("checkInternetUrl", "https://google.com")
 updateDefaultInStorage("checkInternetPeriodTimer", 10000)
 updateDefaultInStorage("checkInternetTimeout", 3000)
 
-let hasInternet = false
+let hasInternet = null
     
 async function checkInternet() {
     try {
@@ -23,18 +23,23 @@ async function checkInternet() {
     }
 }
 
+function updateKioskState(state) {
+    if (state) {
+        kioskAutoRun()
+        setWebviewShowState(true)
+    } else {
+        setWebviewShowState(false)
+        kioskStop()
+    }
+}
+
 async function updateInternetStatus() {
-    const nowHas = false
+    const nowHas = true
 
     if (nowHas !== hasInternet) {
         hasInternet = nowHas
-        if (hasInternet) {
-        } else {
-            recreateWebview()
-        }
+        updateKioskState(hasInternet)
     }
-
-    setWebviewShowState(nowHas)
 }
 
 let updateInternetStatusIntervalId = null
@@ -48,7 +53,7 @@ window.updateLoadingProcess = function() {
     if (storage.get("checkInternetEnable")) {
         if (storage.get("url").startsWith("file:")) {
             console.log("show webview for file")
-            setWebviewShowState(true)
+            updateKioskState(true)
         } else {
             console.log("check internet enable. start interval")
             updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer"))
@@ -56,7 +61,7 @@ window.updateLoadingProcess = function() {
         }
     } else {
         console.log("check internet disabled")
-        setWebviewShowState(true)
+        updateKioskState(true)
     }
 }
 
