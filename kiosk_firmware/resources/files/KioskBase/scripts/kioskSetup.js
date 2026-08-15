@@ -74,6 +74,10 @@ window.addKioskSetupTab = function(name, tab) {
     allTabs.push(tab)
 }
 
+window.createTab = function() {
+    return document.createElement("div")
+}
+
 ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)
 
 const keyHoldTriggerCallback = keyHoldTrigger(toggleKioskSetup)
