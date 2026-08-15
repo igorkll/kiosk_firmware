@@ -43,9 +43,18 @@ function toggleKioskSetup() {
 }
 
 let allTabs = []
+let oldActiveTabIndex = null
 
-window.selectKioskSetupTab = function() {
-    
+window.selectKioskSetupTab = function(index) {
+    if (oldActiveTabIndex != null) {
+        let oldTab = allTabs[oldActiveTabIndex]
+        oldTab.style.display = "none"
+        oldTab.active_button.classList.remove("tab-button-selected")
+    }
+
+    let tab = allTabs[index]
+    tab.style.display = ""
+    tab.active_button.classList.add("tab-button-selected")
 }
 
 window.addKioskSetupTab = function(name, tab) {
@@ -54,7 +63,13 @@ window.addKioskSetupTab = function(name, tab) {
     button.textContent = name
     overlay_buttons.appendChild(button)
 
-    tab.style.display = 'none'
+    const index = allTabs.length
+    button.addEventListener("click", () => {
+        selectKioskSetupTab(index)
+    })
+
+    tab.style.display = "none"
+    tab.active_button = button
     overlay_tabs.appendChild(tab)
     allTabs.push(tab)
 }
