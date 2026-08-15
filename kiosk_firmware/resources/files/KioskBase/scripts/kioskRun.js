@@ -22,10 +22,9 @@ window.setWebviewShowState = function(state) {
     loading_process.style.display = state ? "none" : "flex"
 }
 
-function recreateWebview(newPartition) {
-    if (webview != null) {
-        webview.remove()
-    }
+window.recreateWebview = function(newPartition=null) {
+    if (newPartition == null) newPartition = webview.partition
+    if (webview != null) webview.remove()
 
     const newWebview = document.createElement('webview')
     newWebview.classList.add("webview")
@@ -95,14 +94,17 @@ window.kioskRun = function (url, sessionTemp, sessionTimeout, startTimerOnIntera
     }
 }
 
-window.kioskFirstRun = function() {
+window.kioskAutoRun = function() {
     kioskRun(
         storage.get("url"),
         storage.get("sessionTemp"),
         storage.get("sessionTimeout"),
         storage.get("startTimerOnInteraction")
     )
+}
 
+window.kioskFirstRun = function() {
+    kioskAutoRun()
     document.addEventListener("user_interaction", sessionTimeoutReset)
 }
 
