@@ -16,6 +16,12 @@ let sessionTimeoutStartTimerOnInteraction = null
 
 const user_interaction_code = fs.readFileSync(path.join(__dirname, "scripts", "user_interaction_check.js"), "utf8")
 
+window.setWebviewShowState = function(state) {
+    webview.style.display = state ? "" : "none"
+    document.body.style.cursor = state ? "" : "none"
+    loading_process.style.display = state ? "none" : "flex"
+}
+
 function recreateWebview(newPartition) {
     if (webview != null) {
         webview.remove()
