@@ -7,6 +7,10 @@ const { pathToFileURL } = require('url')
 const globalNodeModules = execSync('npm root -g').toString().trim()
 const startTime = Date.now()
 
+const deasync = globalRequire('deasync')
+const globalImportSync = deasync(globalImport)
+const change_case = globalImportSync('change-case')
+
 const Store = globalRequire("electron-store")
 const storage = new Store()
 

@@ -1,8 +1,6 @@
 {
 
-window.tab_createInput = async function(container, parameter, onChangeCallback=null, min, max) {
-    const changeCase = await globalImport('change-case')
-
+window.tab_createInput = function(container, parameter, onChangeCallback=null, min, max) {
     let parameterValue = storage.get(parameter)
     let parameterType = typeof(parameterValue)
 
@@ -22,7 +20,8 @@ window.tab_createInput = async function(container, parameter, onChangeCallback=n
     }
 
     const labelObject = document.createElement('label')
-    labelObject.textContent = await changeCase.capitalCase(parameter)
+    console.log("change_case global", change_case)
+    labelObject.textContent = change_case.capitalCase(parameter)
 
     const inputObject = document.createElement('input')
     inputObject.type = inputObjectType
