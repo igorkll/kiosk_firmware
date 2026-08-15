@@ -106,6 +106,7 @@ window.kioskAutoRun = function() {
 window.kioskFirstRun = function() {
     kioskAutoRun()
     document.addEventListener("user_interaction", sessionTimeoutReset)
+    updateLoadingProcess()
 }
 
 }

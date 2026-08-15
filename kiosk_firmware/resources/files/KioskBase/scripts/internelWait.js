@@ -37,18 +37,21 @@ async function updateInternetStatus() {
     setWebviewShowState(nowHas)
 }
 
-function checkInternet() {
-    if (storage.url.startsWith("file:")) {
-        setWebviewShowState(true)
-    } else {
-        setInterval(updateInternetStatus, checkPeriod)
-        updateInternetStatus()
-    }
-}
+let updateInternetStatusIntervalId = null
 
 window.updateLoadingProcess = function() {
+    if (updateInternetStatusIntervalId != null) {
+        clearInterval(updateInternetStatusIntervalId)
+        updateInternetStatusIntervalId = null
+    }
+
     if (storage.checkInternetEnable) {
-        checkInternet()
+        if (storage.url.startsWith("file:")) {
+            setWebviewShowState(true)
+        } else {
+            updateInternetStatusIntervalId = setInterval(updateInternetStatus, checkPeriod)
+            updateInternetStatus()
+        }
     } else {
         setWebviewShowState(true)
     }
