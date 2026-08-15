@@ -20,7 +20,7 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
     }
 
     const labelObject = document.createElement('label')
-    labelObject.textContent = change_case.capitalCase(parameter)
+    labelObject.textContent = capitalCase(parameter)
 
     const inputObject = document.createElement('input')
     inputObject.type = inputObjectType
