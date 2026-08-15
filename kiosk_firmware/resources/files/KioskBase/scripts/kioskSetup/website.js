@@ -3,7 +3,8 @@
 const tab_website = createTab()
 
 function updateValue() {
-
+    kioskStop()
+    kioskAutoRun()
 }
 
 tab_createInput(tab_website, "url", updateValue)

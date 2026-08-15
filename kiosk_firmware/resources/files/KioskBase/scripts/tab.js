@@ -61,6 +61,7 @@ window.tab_createInput = async function(container, parameter, onChangeCallback=n
                 storage.set(parameter, inputObject.value)
                 break;
         }
+        onChangeCallback()
     })
 }
 
