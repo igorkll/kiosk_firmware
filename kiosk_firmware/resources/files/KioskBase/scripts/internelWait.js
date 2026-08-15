@@ -25,6 +25,7 @@ async function checkInternet() {
 
 async function updateInternetStatus() {
     const nowHas = await checkInternet()
+    console.log("internet state", nowHas)
 
     if (nowHas !== hasInternet) {
         hasInternet = nowHas
