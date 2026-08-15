@@ -54,6 +54,16 @@
     height: 100%;
 }
 
+.tab {
+    background-color: #6565657b;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.359);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .controls-close-btn {
     all: unset;
     cursor: pointer;
