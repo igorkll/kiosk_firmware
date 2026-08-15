@@ -1,15 +1,9 @@
 {
 
-function updateDefaultInStore(key, value) {
-    if (!storage.has(key)) {
-        storage.set(key, value)
-    }
-}
-
-updateDefaultInStore("url", "https://google.com")
-updateDefaultInStore("sessionTemp", false)
-updateDefaultInStore("sessionTimeout", 20000)
-updateDefaultInStore("startTimerOnInteraction", true)
+updateDefaultInStorage("url", "https://google.com")
+updateDefaultInStorage("sessionTemp", false)
+updateDefaultInStorage("sessionTimeout", 20000)
+updateDefaultInStorage("startTimerOnInteraction", true)
 
 // ----------------------------------------------
 

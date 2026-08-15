@@ -9,6 +9,12 @@ const startTime = Date.now()
 const Store = globalRequire("electron-store")
 const storage = new Store()
 
+function updateDefaultInStorage(key, value) {
+    if (!storage.has(key)) {
+        storage.set(key, value)
+    }
+}
+
 codeInWebview = false
 
 function getUptimeMs() {
