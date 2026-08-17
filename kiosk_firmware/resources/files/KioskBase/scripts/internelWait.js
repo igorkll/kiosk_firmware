@@ -43,6 +43,7 @@ window.updateLoadingProcess = function() {
 
     if (storage.get("checkInternetEnable")) {
         if (storage.get("url").startsWith("file:")) {
+            hasInternet = null
             console.log("show webview for file")
             setKioskState(true)
         } else {
@@ -51,6 +52,7 @@ window.updateLoadingProcess = function() {
             updateInternetStatus()
         }
     } else {
+        hasInternet = null
         console.log("check internet disabled")
         setKioskState(true)
     }
