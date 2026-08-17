@@ -81,11 +81,9 @@ function createWindow () {
         })
     }
 
-    /*
-    globalShortcut.register('CommandOrControl+K', () => {
+    globalShortcut.register('CommandOrControl+Meta+Shift+S', () => {
         win.webContents.send("open-kiosk-setup-trigger")
     })
-    */
 
     globalShortcut.register('CommandOrControl+Alt+Delete', () => {
         win.webContents.send("open-kiosk-setup")
