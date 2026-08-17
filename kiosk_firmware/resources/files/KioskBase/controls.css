@@ -127,3 +127,27 @@
 .tab-button-selected {
     background-color: #a6a6a67b;
 }
+
+label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+
+    width: 30px;
+    height: 30px;
+    margin: 0;
+
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 4px;
+
+    transition: background-color 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #0b70dd;
+}
