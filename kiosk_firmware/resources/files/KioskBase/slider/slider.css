@@ -6,8 +6,8 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-
-    position: absolute;
+    
+    position: relative;
 }
 
 .slider-body {
@@ -23,8 +23,9 @@
     width: 30px;
     background-color: #62ff00;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.604);
+    border-radius: 9999vh;
     
-    position: relative;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
