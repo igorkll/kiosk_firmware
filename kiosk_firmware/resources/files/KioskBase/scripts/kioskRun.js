@@ -97,6 +97,7 @@ function stopSessionTimer() {
 
 function runSessionTimer() {
     if (sessionTimeoutCurrent > 0 && storage.get("sessionTimeoutEnabled", false)) {
+        console.log("run session timer")
         sessionTimeoutId = setTimeout(() => {
             console.log("session timeout! restart kiosk")
             kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent, sessionTimeoutStartTimerOnInteraction)

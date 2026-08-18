@@ -102,3 +102,14 @@ function capitalCase(str) {
       .map(word => word[0].toUpperCase() + word.slice(1))
       .join(' ');
 }
+
+function snakeCase(str) {
+    return str
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[_\-\s]+/g, ' ')
+      .toLowerCase()
+      .split(' ')
+      .filter(word => word.length > 0)
+      .map(word => word[0].toUpperCase() + word.slice(1))
+      .join(' ');
+}
