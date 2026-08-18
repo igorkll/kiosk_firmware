@@ -48,6 +48,7 @@ window.createSlider = function(value) {
     })
 
     forceUpdateDotTimer = setInterval(updateDot, 100)
+    updateDot()
 
     return slider
 }
