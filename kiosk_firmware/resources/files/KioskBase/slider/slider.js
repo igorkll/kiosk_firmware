@@ -12,6 +12,13 @@ window.createSlider = function(value) {
     sliderDot.classList.add("slider-dot")
     slider.appendChild(sliderDot)
 
+    function updateDot() {
+        sliderDot.style.left = `${(sliderBody.offsetWidth - sliderDot.offsetWidth) * value}px`
+        console.log(sliderDot.style.left, sliderBody.offsetWidth, sliderDot.offsetWidth)
+    }
+
+    setInterval(updateDot, 100)
+
     return slider
 }
 
