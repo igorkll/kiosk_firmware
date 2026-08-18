@@ -1,12 +1,16 @@
 (function() {
 
-updateDefaultInStorage("systemVolume", 0.4)
+updateDefaultInStorage("outputVolume", 0.4)
+updateDefaultInStorage("inputVolume", 1)
 
-window.updateSystemVolume = function() {
-    let systemVolume = storage.get("systemVolume")
-    exec(`wpctl set-volume @DEFAULT_SINK@ ${systemVolume}`, (error, stdout, stderr) => {});
+window.updateVolume = function() {
+    let outputVolume = storage.get("outputVolume")
+    let inputVolume = storage.get("inputVolume")
+
+    exec(`wpctl set-volume @DEFAULT_SINK@ ${outputVolume}`, (error, stdout, stderr) => {})
+    exec(`wpctl set-volume @DEFAULT_SOURCE@ ${inputVolume}`, (error, stdout, stderr) => {})
 }
 
-updateSystemVolume()
+updateVolume()
 
 })();

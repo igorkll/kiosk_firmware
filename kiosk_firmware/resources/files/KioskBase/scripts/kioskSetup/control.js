@@ -15,8 +15,12 @@ tab_createButton(tab, "Debug terminal", () => {
     exec('weston-terminal', (error, stdout, stderr) => {});
 })
 
-tab_createSlider(tab, "systemVolume", (volume) => {
-    updateSystemVolume()
+tab_createSlider(tab, "outputVolume", (volume) => {
+    updateVolume()
+})
+
+tab_createSlider(tab, "inputVolume", (volume) => {
+    updateVolume()
 })
 
 addKioskSetupTab("Control", tab)
