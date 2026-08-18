@@ -33,14 +33,32 @@ input[type="checkbox"]:checked {
 input[type="text"] {
     appearance: none;
 
-    width: 40%;
+    width: 50%;
     height: 30px;
 
     background-color: #ffffff;
     border: 1px solid #000000;
     border-radius: 4px;
+}
+
+/* ----------------------------- BUTTON ----------------------------- */
+
+input[type="button"] {
+    appearance: none;
+
+    width: 50%;
+    height: 40px;
+
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    font-size: 16px;
 
     transition: background-color 0.2s ease;
+}
+
+input[type="button"]:active {
+    background-color: #b3b3b3;
 }
 
 /* ----------------------------- NUMBER ----------------------------- */
@@ -48,14 +66,12 @@ input[type="text"] {
 input[type="number"] {
     appearance: none;
 
-    width: 40%;
+    width: 50%;
     height: 30px;
 
     background-color: #ffffff;
     border: 1px solid #000000;
     border-radius: 4px;
-
-    transition: background-color 0.2s ease;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

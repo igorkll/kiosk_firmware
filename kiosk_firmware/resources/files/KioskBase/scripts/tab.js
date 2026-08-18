@@ -115,4 +115,14 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
     })
 }
 
+window.tab_createButton = function(container, title, callback) {
+    const buttonObject = document.createElement('input')
+    buttonObject.type = "button"
+    buttonObject.value = title
+
+    buttonObject.addEventListener("click", callback)
+
+    container.appendChild(buttonObject)
+}
+
 })();
