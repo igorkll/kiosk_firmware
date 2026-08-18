@@ -9,15 +9,16 @@
 }
 
 .slider-body {
+    pointer-events: none;
     height: 5px;
     width: 100%;
     background-color: #424242;
-    pointer-events: none;
 }
 
 .slider- {
-    height: 5px;
-    width: 100%;
-    background-color: #424242;
     pointer-events: none;
+    height: 30px;
+    width: 30px;
+    background-color: #62ff00;
+    box-shadow: ;
 }
