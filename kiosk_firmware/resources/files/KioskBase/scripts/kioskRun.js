@@ -1,4 +1,4 @@
-{
+(function() {
 
 updateDefaultInStorage("url", "https://google.com")
 updateDefaultInStorage("sessionTimeoutEnabled", false)
@@ -64,7 +64,8 @@ window.recreateWebview = function(newPartition=null) {
     })
 
     newWebview.addEventListener('dom-ready', () => {
-        webview.executeJavaScript("codeInWebview = true\n" + user_interaction_code)
+        //newWebview.openDevTools()
+        webview.executeJavaScript("codeInWebview = true;\n" + user_interaction_code)
     });
 
     document.body.appendChild(newWebview)
@@ -144,4 +145,4 @@ window.kioskFirstRun = function() {
     updateLoadingProcess()
 }
 
-}
+})();

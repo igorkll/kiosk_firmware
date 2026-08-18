@@ -1,4 +1,4 @@
-{
+(function() {
 
 const tab = tab_create()
 
@@ -14,4 +14,4 @@ tab_createInput(tab, "startTimerOnInteraction", updateValue)
 
 addKioskSetupTab("Website", tab)
 
-}
+})();

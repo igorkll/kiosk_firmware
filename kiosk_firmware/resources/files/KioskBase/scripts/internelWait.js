@@ -1,4 +1,4 @@
-{
+(function() {
 
 updateDefaultInStorage("checkInternetEnable", true)
 updateDefaultInStorage("checkInternetUrl", "https://google.com")
@@ -58,4 +58,4 @@ window.updateLoadingProcess = function() {
     }
 }
 
-}
+})();

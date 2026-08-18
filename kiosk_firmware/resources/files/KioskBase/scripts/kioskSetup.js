@@ -1,4 +1,4 @@
-{
+(function() {
 
 const { ipcRenderer } = require('electron')
 
@@ -56,4 +56,4 @@ setTimeout(() => {
 
 document.getElementById("overlay-close-btn").addEventListener("click", closeKioskSetup)
 
-}
+})();

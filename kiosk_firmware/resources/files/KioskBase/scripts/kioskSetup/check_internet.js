@@ -1,4 +1,4 @@
-{
+(function() {
 
 const tab = tab_create()
 
@@ -13,4 +13,4 @@ tab_createInput(tab, "checkInternetTimeout", updateValue, 1, 30)
 
 addKioskSetupTab("Check Internet", tab)
 
-}
+})();

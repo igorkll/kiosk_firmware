@@ -1,4 +1,4 @@
-{
+(function() {
 
 const overlay_buttons = document.getElementById("overlay-buttons")
 const overlay_tabs = document.getElementById("overlay-tabs")
@@ -115,4 +115,4 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
     })
 }
 
-}
+})();

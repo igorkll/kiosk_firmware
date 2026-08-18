@@ -1,4 +1,4 @@
-{
+(function() {
     let lastX = null, lastY = null, lastTime = null
     const MIN_SPEED = 512
 
@@ -47,4 +47,4 @@
     document.addEventListener('touchstart', handleOther)
     document.addEventListener('keydown', handleOther)
     document.addEventListener('wheel', handleOther)
-}
+})();
