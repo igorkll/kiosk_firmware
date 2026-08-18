@@ -12,9 +12,14 @@ window.createSlider = function(value) {
     sliderDot.classList.add("slider-dot")
     slider.appendChild(sliderDot)
 
+    let forceUpdateDotTimer = null
+
     function updateDot() {
-        sliderDot.style.left = `${(sliderBody.offsetWidth - sliderDot.offsetWidth) * value}px`
-        sliderDot.textContent = `${Math.floor(value * 100)}%`
+        if (sliderBody.offsetWidth > 0) {
+            sliderDot.style.left = `${(sliderBody.offsetWidth - sliderDot.offsetWidth) * value}px`
+            sliderDot.textContent = `${Math.floor(value * 100)}%`
+            clearInterval(forceUpdateDotTimer)
+        }
     }
 
     let isPointing = false
@@ -25,6 +30,7 @@ window.createSlider = function(value) {
             localValue = Math.min(1, Math.max(localValue, 0))
             value = localValue
             updateDot()
+            slider.dispatchEvent(new CustomEvent("slide", {detail: localValue}))
         }
     }
 
@@ -41,7 +47,7 @@ window.createSlider = function(value) {
         isPointing = false
     })
 
-    setInterval(updateDot, 100)
+    forceUpdateDotTimer = setInterval(updateDot, 100)
 
     return slider
 }
