@@ -14,8 +14,17 @@ window.createSlider = function(value) {
 
     function updateDot() {
         sliderDot.style.left = `${(sliderBody.offsetWidth - sliderDot.offsetWidth) * value}px`
-        console.log(sliderDot.style.left, sliderBody.offsetWidth, sliderDot.offsetWidth)
     }
+
+    let isPointing = false
+
+    slider.addEventListener("pointerdown", () => {
+        isPointing = true
+    })
+
+    slider.addEventListener("pointerup", () => {
+        isPointing = false
+    })
 
     setInterval(updateDot, 100)
 
