@@ -58,7 +58,7 @@ input[type="button"] {
 }
 
 input[type="button"]:active {
-    background-color: #b3b3b3;
+    background-color: #c5c5c5;
 }
 
 /* ----------------------------- NUMBER ----------------------------- */
