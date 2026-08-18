@@ -3,8 +3,6 @@
 const { ipcRenderer } = require('electron')
 
 const overlay = document.getElementById("overlay")
-const overlay_buttons = document.getElementById("overlay-buttons")
-const overlay_tabs = document.getElementById("overlay-tabs")
 
 let closeKioskTimer = null
 function openKioskSetup() {
@@ -42,54 +40,6 @@ function toggleKioskSetup() {
     } else {
         openKioskSetup()
     }
-}
-
-let allTabs = []
-let oldActiveTabIndex = null
-
-window.selectKioskSetupTab = function(index) {
-    if (oldActiveTabIndex != null) {
-        let oldTab = allTabs[oldActiveTabIndex]
-        oldTab.style.display = "none"
-        oldTab.active_button.classList.remove("tab-button-selected")
-    }
-
-    let tab = allTabs[index]
-    tab.style.display = ""
-    tab.active_button.classList.add("tab-button-selected")
-    
-    oldActiveTabIndex = index
-}
-
-let lastIndex = 0
-window.addKioskSetupTab = function(name, tab) {
-    let button = document.createElement("button")
-    button.classList.add("tab-button")
-    button.textContent = name
-    
-    const index = lastIndex
-    lastIndex++
-
-    insertAt(overlay_buttons, button, index)
-    
-    button.addEventListener("click", () => {
-        selectKioskSetupTab(index)
-    })
-
-    tab.style.display = "none"
-    tab.active_button = button
-    overlay_tabs.appendChild(tab)
-    allTabs.push(tab)
-
-    if (allTabs.length == 1) {
-        selectKioskSetupTab(0)
-    }
-}
-
-window.createTab = function() {
-    let tab = document.createElement("div")
-    tab.classList.add("tab")
-    return tab
 }
 
 ipcRenderer.on('open-kiosk-setup', toggleKioskSetup)

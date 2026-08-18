@@ -2,15 +2,15 @@
 
 updateDefaultInStorage("checkInternetEnable", true)
 updateDefaultInStorage("checkInternetUrl", "https://google.com")
-updateDefaultInStorage("checkInternetPeriodTimer", 10000)
-updateDefaultInStorage("checkInternetTimeout", 3000)
+updateDefaultInStorage("checkInternetPeriodTimer", 10)
+updateDefaultInStorage("checkInternetTimeout", 3)
 
 let hasInternet = null
     
 async function checkInternet() {
     try {
         const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), storage.get("checkInternetTimeout"))
+        const timeoutId = setTimeout(() => controller.abort(), storage.get("checkInternetTimeout") * 1000)
         const response = await fetch(storage.get("checkInternetUrl"), {
             method: "HEAD",
             signal: controller.signal,
@@ -48,7 +48,7 @@ window.updateLoadingProcess = function() {
             setKioskState(true)
         } else {
             console.log("check internet enable. start interval")
-            updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer"))
+            updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer") * 1000)
             updateInternetStatus()
         }
     } else {
