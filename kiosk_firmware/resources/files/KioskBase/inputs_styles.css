@@ -45,6 +45,7 @@ input[type="text"] {
 
 input[type="button"] {
     appearance: none;
+    cursor: pointer;
 
     width: 50%;
     height: 40px;
