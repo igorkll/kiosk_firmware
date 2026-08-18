@@ -1,3 +1,7 @@
+let tocase = {}
+
+{
+
 function __split(str) {
     return str
         .replace(/([a-z])([A-Z])/g, '$1 $2')
@@ -7,45 +11,48 @@ function __split(str) {
         .filter(word => word.length > 0)
 }
 
-function titleCase(str) {
+tocase.titleCase = function (str) {
     return __split(str)
         .map(word => word[0].toUpperCase() + word.slice(1))
         .join(' ')
 }
 
-function snakeCase(str) {
+tocase.snakeCase = function snakeCase(str) {
     return __split(str).join('_')
 }
 
-function screamingCase(str) {
+tocase.screamingCase = function screamingCase(str) {
     return __split(str).join('_').toUpperCase()
 }
 
-function kebabCase(str) {
+tocase.kebabCase = function kebabCase(str) {
     return __split(str).join('-')
 }
 
-function pascalCase(str) {
+tocase.pascalCase = function pascalCase(str) {
     return __split(str)
         .map(word => word[0].toUpperCase() + word.slice(1))
         .join('')
 }
 
-function camelCase(str) {
+tocase.camelCase = function camelCase(str) {
     let pascalCaseStr = pascalCase(str)
     return pascalCaseStr[0].toLowerCase() + pascalCaseStr.slice(1)
 }
 
-function lowerCase(str) {
+tocase.lowerCase = function lowerCase(str) {
     return __split(str).join(' ')
 }
 
-function upperCase(str) {
+tocase.upperCase = function upperCase(str) {
     return __split(str).join(' ').toUpperCase()
 }
 
-function sentenceCase(str) {
+tocase.sentenceCase = function sentenceCase(str) {
     let lowerCaseStr = lowerCase(str)
     return lowerCaseStr[0].toUpperCase() + lowerCaseStr.slice(1)
 }
+
+}
+
 
