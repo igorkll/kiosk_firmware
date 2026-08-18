@@ -15,6 +15,6 @@ tab_createButton(tab, "Debug terminal", () => {
     exec('weston-terminal', (error, stdout, stderr) => {});
 })
 
-addKioskSetupTab("Power", tab)
+addKioskSetupTab("Control", tab)
 
 })();
