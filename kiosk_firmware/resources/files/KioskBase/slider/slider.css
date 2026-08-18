@@ -8,6 +8,7 @@
     align-items: center;
     
     position: relative;
+    cursor: pointer;
 }
 
 .slider-body {
