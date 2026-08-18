@@ -133,21 +133,26 @@ window.tab_createLabel = function(container, title) {
 }
 
 window.tab_createSlider = function(container, parameter, onChangeCallback=null, min, max) {
-    let parameterValue = storage.get(parameter)
+    let value = storage.get(parameter)
 
     const labelObject = document.createElement('label')
     labelObject.textContent = tocase.sentenceCase(parameter)
 
-    
+    let sliderObject = createSlider(value, min, max)
     
     const parameterLine = document.createElement('div')
     parameterLine.classList.add("line-container")
-    parameterLine.appendChild(inputObject)
+    parameterLine.appendChild(sliderObject)
     parameterLine.appendChild(labelObject)
 
     container.appendChild(parameterLine)
 
-    inputObject.addEventListener("pointerup", () => {
+    sliderObject.addEventListener("slide", (newvalue) => {
+        value = newvalue
+        storage.set(parameter, value)
+    })
+
+    sliderObject.addEventListener("pointerup", () => {
         onChangeCallback()
     })
 }
