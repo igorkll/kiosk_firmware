@@ -22,9 +22,10 @@ window.createSlider = function(value) {
         isPointing = true
     })
 
-    document.addEventListener("pointermove", () => {
-        if (isPointing) {
-            
+    document.addEventListener("pointermove", (event) => {
+        if (isPointing && sliderBody.offsetWidth > 0) {
+            let value = (event.clientX - slider.getBoundingClientRect().left) / sliderBody.offsetWidth
+            value = Math.min(1, Math.max(value, 0))
         }
     })
 
