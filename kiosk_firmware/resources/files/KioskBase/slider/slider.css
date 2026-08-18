@@ -6,6 +6,8 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+
+    position: absolute;
 }
 
 .slider-body {
@@ -15,10 +17,16 @@
     background-color: #424242;
 }
 
-.slider- {
+.slider-dot {
     pointer-events: none;
     height: 30px;
     width: 30px;
     background-color: #62ff00;
-    box-shadow: ;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.604);
+    
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 30px;
 }
