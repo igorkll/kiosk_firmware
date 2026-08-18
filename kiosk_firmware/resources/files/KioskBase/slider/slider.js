@@ -14,6 +14,7 @@ window.createSlider = function(value) {
 
     function updateDot() {
         sliderDot.style.left = `${(sliderBody.offsetWidth - sliderDot.offsetWidth) * value}px`
+        sliderDot.textContent = `${Math.floor(value * 100)}%`
     }
 
     let isPointing = false
