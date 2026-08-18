@@ -3,10 +3,12 @@
 const { ipcRenderer } = require('electron')
 
 const overlay = document.getElementById("overlay")
+const loading_process = document.getElementById("loading-process")
 
 let closeKioskTimer = null
 function openKioskSetup() {
     console.log("open kiosk setup")
+    loading_process.style.cursor = "default"
 
     if (closeKioskTimer != null) {
         clearTimeout(closeKioskTimer)
@@ -24,6 +26,8 @@ function openKioskSetup() {
 
 function closeKioskSetup() {
     console.log("close kiosk setup")
+    loading_process.style.cursor = "none"
+
     overlay.classList.remove("overlay-open2")
     if (closeKioskTimer != null) {
         closeKioskTimer = setTimeout(() => {
