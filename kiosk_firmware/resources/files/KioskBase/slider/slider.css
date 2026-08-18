@@ -1,7 +1,23 @@
 .slider {
     width: 50%;
     height: 30px;
-    background-color: azure;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
+.slider-body {
+    height: 5px;
+    width: 100%;
+    background-color: #424242;
+    pointer-events: none;
+}
 
+.slider- {
+    height: 5px;
+    width: 100%;
+    background-color: #424242;
+    pointer-events: none;
+}
