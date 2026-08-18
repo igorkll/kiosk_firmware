@@ -18,15 +18,22 @@ window.createSlider = function(value) {
 
     let isPointing = false
 
+    function update() {
+        if (isPointing && sliderBody.offsetWidth > 0) {
+            let localValue = (event.clientX - slider.getBoundingClientRect().left) / sliderBody.offsetWidth
+            localValue = Math.min(1, Math.max(localValue, 0))
+            value = localValue
+            updateDot()
+        }
+    }
+
     slider.addEventListener("pointerdown", () => {
         isPointing = true
+        update()
     })
 
     document.addEventListener("pointermove", (event) => {
-        if (isPointing && sliderBody.offsetWidth > 0) {
-            let value = (event.clientX - slider.getBoundingClientRect().left) / sliderBody.offsetWidth
-            value = Math.min(1, Math.max(value, 0))
-        }
+        update()
     })
 
     document.addEventListener("pointerup", () => {
