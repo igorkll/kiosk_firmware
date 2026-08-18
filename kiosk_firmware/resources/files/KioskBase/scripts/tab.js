@@ -132,13 +132,13 @@ window.tab_createLabel = function(container, title) {
     container.appendChild(labelObject)
 }
 
-window.tab_createSlider = function(container, parameter, onChangeCallback=null, min, max) {
+window.tab_createSlider = function(container, parameter, onChangeCallback=null) {
     let value = storage.get(parameter)
 
     const labelObject = document.createElement('label')
     labelObject.textContent = tocase.sentenceCase(parameter)
 
-    let sliderObject = createSlider(value, min, max)
+    let sliderObject = createSlider(value)
     
     const parameterLine = document.createElement('div')
     parameterLine.classList.add("line-container")
