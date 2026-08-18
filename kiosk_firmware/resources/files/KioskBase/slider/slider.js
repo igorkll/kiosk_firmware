@@ -22,7 +22,13 @@ window.createSlider = function(value) {
         isPointing = true
     })
 
-    slider.addEventListener("pointerup", () => {
+    document.addEventListener("pointermove", () => {
+        if (isPointing) {
+            
+        }
+    })
+
+    document.addEventListener("pointerup", () => {
         isPointing = false
     })
 
