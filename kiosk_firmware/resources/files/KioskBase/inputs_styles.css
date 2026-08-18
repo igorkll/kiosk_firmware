@@ -20,6 +20,8 @@ input[type="checkbox"] {
     border-radius: 4px;
 
     transition: background-color 0.2s ease;
+
+    cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
@@ -41,6 +43,8 @@ input[type="text"] {
     transition: background-color 0.2s ease;
 }
 
+/* ----------------------------- NUMBER ----------------------------- */
+
 input[type="number"] {
     appearance: none;
 
@@ -52,4 +56,9 @@ input[type="number"] {
     border-radius: 4px;
 
     transition: background-color 0.2s ease;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    cursor: pointer;
 }
