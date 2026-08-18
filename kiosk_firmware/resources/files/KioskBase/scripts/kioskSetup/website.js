@@ -7,6 +7,7 @@ function updateValue() {
 }
 
 tab_createInput(tab, "url", updateValue)
+tab_createInput(tab, "sessionTimeoutEnabled", updateValue)
 tab_createInput(tab, "sessionTimeout", updateValue, 10, 60 * 5)
 tab_createInput(tab, "sessionTemp", updateValue)
 tab_createInput(tab, "startTimerOnInteraction", updateValue)

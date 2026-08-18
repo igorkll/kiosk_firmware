@@ -1,6 +1,7 @@
 {
 
 updateDefaultInStorage("url", "https://google.com")
+updateDefaultInStorage("sessionTimeoutEnabled", false)
 updateDefaultInStorage("sessionTemp", false)
 updateDefaultInStorage("sessionTimeout", 60)
 updateDefaultInStorage("startTimerOnInteraction", true)
@@ -95,7 +96,7 @@ function stopSessionTimer() {
 }
 
 function runSessionTimer() {
-    if (sessionTimeoutCurrent > 0) {
+    if (sessionTimeoutCurrent > 0 && storage.get("sessionTimeoutEnabled", false)) {
         sessionTimeoutId = setTimeout(() => {
             console.log("session timeout! restart kiosk")
             kioskRun(sessionTimeoutUrl, sessionTimeoutSessionTemp, sessionTimeoutCurrent, sessionTimeoutStartTimerOnInteraction)

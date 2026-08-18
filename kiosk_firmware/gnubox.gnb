@@ -24,8 +24,7 @@
     "libgtk-3-0",
     "nano",
     "acpid",
-    "fonts-recommended",
-    "ttf-mscorefonts-installer"
+    "fonts-recommended"
   ],
   "exclude_packages": [],
   "debian_variant": "minbase",
