@@ -71,7 +71,7 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
     }
 
     const labelObject = document.createElement('label')
-    labelObject.textContent = sentenceCase(parameter)
+    labelObject.textContent = tocase.sentenceCase(parameter)
 
     const inputObject = document.createElement('input')
     inputObject.type = inputObjectType

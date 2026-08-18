@@ -1,6 +1,6 @@
-let tocase = {}
+let tocase = {};
 
-{
+(function() {
 
 function __split(str) {
     return str
@@ -17,42 +17,42 @@ tocase.titleCase = function (str) {
         .join(' ')
 }
 
-tocase.snakeCase = function snakeCase(str) {
+tocase.snakeCase = function (str) {
     return __split(str).join('_')
 }
 
-tocase.screamingCase = function screamingCase(str) {
+tocase.screamingCase = function (str) {
     return __split(str).join('_').toUpperCase()
 }
 
-tocase.kebabCase = function kebabCase(str) {
+tocase.kebabCase = function (str) {
     return __split(str).join('-')
 }
 
-tocase.pascalCase = function pascalCase(str) {
+tocase.pascalCase = function (str) {
     return __split(str)
         .map(word => word[0].toUpperCase() + word.slice(1))
         .join('')
 }
 
-tocase.camelCase = function camelCase(str) {
-    let pascalCaseStr = pascalCase(str)
+tocase.camelCase = function (str) {
+    let pascalCaseStr = tocase.pascalCase(str)
     return pascalCaseStr[0].toLowerCase() + pascalCaseStr.slice(1)
 }
 
-tocase.lowerCase = function lowerCase(str) {
+tocase.lowerCase = function (str) {
     return __split(str).join(' ')
 }
 
-tocase.upperCase = function upperCase(str) {
+tocase.upperCase = function (str) {
     return __split(str).join(' ').toUpperCase()
 }
 
-tocase.sentenceCase = function sentenceCase(str) {
-    let lowerCaseStr = lowerCase(str)
+tocase.sentenceCase = function (str) {
+    let lowerCaseStr = tocase.lowerCase(str)
     return lowerCaseStr[0].toUpperCase() + lowerCaseStr.slice(1)
 }
 
-}
+})();
 
 
