@@ -70,9 +70,6 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
             break;
     }
 
-    const labelObject = document.createElement('label')
-    labelObject.textContent = tocase.sentenceCase(parameter)
-
     const inputObject = document.createElement('input')
     inputObject.type = inputObjectType
     switch (parameterType) {
@@ -88,13 +85,6 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
             inputObject.value = parameterValue
             break;
     }
-    
-    const parameterLine = document.createElement('div')
-    parameterLine.classList.add("line-container")
-    parameterLine.appendChild(inputObject)
-    parameterLine.appendChild(labelObject)
-
-    container.appendChild(parameterLine)
 
     inputObject.addEventListener("change", () => {
         switch (parameterType) {
@@ -113,6 +103,8 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
         }
         onChangeCallback()
     })
+
+    tab_createLabel(container, tocase.sentenceCase(parameter), inputObject)
 }
 
 window.tab_createButton = function(container, title, callback) {
@@ -125,11 +117,19 @@ window.tab_createButton = function(container, title, callback) {
     container.appendChild(buttonObject)
 }
 
-window.tab_createLabel = function(container, title) {
+window.tab_createLabel = function(container, title, forElement=null) {
     const labelObject = document.createElement('label')
     labelObject.textContent = title
 
-    container.appendChild(labelObject)
+    if (forElement != null) {
+        const parameterLine = document.createElement('div')
+        parameterLine.classList.add("line-container")
+        parameterLine.appendChild(forElement)
+        parameterLine.appendChild(labelObject)
+        container.appendChild(parameterLine)
+    } else {
+        container.appendChild(labelObject)
+    }
 }
 
 window.tab_createSlider = function(container, parameter, onChangeCallback=null) {
