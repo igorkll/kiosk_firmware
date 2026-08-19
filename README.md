@@ -10,7 +10,7 @@ there are several ways to get into the setup window:
 * hold it down for 5 seconds: ctrl+super+shift+s
 
 ## download last release build
-* x86_64 BIOS / UEFI: 
+* x86_64 BIOS / UEFI: https://drive.google.com/file/d/1FLsYqHHgXv5M_ynwdy--WVJ0BhO81hqy/view?usp=sharing
 
 ## roadmap
 * Raspberry Pi x64 support (this is currently working, but without GPU acceleration due to a bug in Weston)
