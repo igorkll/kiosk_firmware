@@ -1,4 +1,5 @@
-# kiosk_firmware
+# Kiosk firmware
+![preview](https://raw.githubusercontent.com/igorkll/kiosk_firmware/refs/heads/main/screenshots/1.png)  
 free open source OS for kiosks  
 
 ## setup
