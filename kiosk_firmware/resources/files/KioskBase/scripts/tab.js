@@ -29,7 +29,8 @@ window.selectKioskSetupTab = function(index) {
     tab.style.display = ""
     tab.active_button.classList.add("tab-button-selected")
 
-    
+    const parent = tab.last_line.parentNode;
+    parent.appendChild(tab.last_line)
     
     oldActiveTabIndex = index
 }
@@ -54,10 +55,6 @@ window.addKioskSetupTab = function(name, tab) {
     tab.last_line = overlay_buttons_host.lastElementChild
     overlay_tabs.appendChild(tab)
     allTabs.push(tab)
-
-    if (allTabs.length == 1) {
-        selectKioskSetupTab(0)
-    }
 }
 
 window.tab_create = function() {
