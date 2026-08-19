@@ -83,6 +83,10 @@ window.removeWebview = function() {
     if (webview != null) webview.remove()
 }
 
+window.openDevTools = function() {
+    if (webview != null) webview.openDevTools()
+}
+
 function rawRunKiosk(url=null, sessionTemp=false) {
     let partition
     if (sessionTemp) {

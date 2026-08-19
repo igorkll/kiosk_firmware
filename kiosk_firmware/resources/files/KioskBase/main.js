@@ -92,13 +92,21 @@ function createWindow () {
     win.loadFile(path.join(__dirname, 'main.html'))
 
     if (debug) win.openDevTools()
+
+    return win
 }
 
 ipcMain.on('quit-app', () => {
     app.quit()
 })
 
+let win = null
+
+ipcMain.on('open-devtools', () => {
+    if (win != null) win.openDevTools()
+})
+
 app.whenReady().then(() => {
     Store.initRenderer()
-    createWindow()
+    win = createWindow()
 })

@@ -3,6 +3,7 @@ const fs = require('fs')
 const { app } = require('electron')
 const { exec, execSync } = require('child_process')
 const { pathToFileURL } = require('url')
+const { ipcRenderer } = require('electron')
 
 const globalNodeModules = execSync('npm root -g').toString().trim()
 const startTime = Date.now()
