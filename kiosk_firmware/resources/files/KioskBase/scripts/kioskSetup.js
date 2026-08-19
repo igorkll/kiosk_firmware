@@ -11,7 +11,10 @@ let closeKioskTimer = null
 let autoCloseKioskSetupTimerId = null
 
 function startAutoCloseTimer() {
-    autoCloseKioskSetupTimerId = setTimeout(closeKioskSetup, autoCloseMenuTimer * 1000)
+    autoCloseKioskSetupTimerId = setTimeout(() => {
+        autoCloseKioskSetupTimerId = null
+        closeKioskSetup()
+    }, autoCloseMenuTimer * 1000)
 }
 
 function openKioskSetup() {
