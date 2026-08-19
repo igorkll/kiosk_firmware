@@ -71,7 +71,7 @@ window.recreateWebview = function(newPartition=null) {
     })
 
     newWebview.addEventListener('dom-ready', () => {
-        newWebview.openDevTools()
+        //newWebview.openDevTools()
         webview.executeJavaScript("codeInWebview = true;\n" + user_interaction_code)
     })
 
