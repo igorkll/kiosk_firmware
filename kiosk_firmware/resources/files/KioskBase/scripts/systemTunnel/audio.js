@@ -33,68 +33,80 @@ function getVolume(device) {
 
 // -------------------------------------- get input/output
 
-window.getOutput = function() {
+window.audio_getOutput = function() {
     return getVolume("@DEFAULT_SINK@")
 }
 
-window.getInput = function() {
+window.audio_getInput = function() {
     return getVolume("@DEFAULT_SOURCE@")
 }
 
 // async
 
-window.getOutputAsync = async function() {
+window.audio_getOutputAsync = async function() {
     return await getVolumeAsync("@DEFAULT_SINK@")
 }
 
-window.getInputAsync = async function() {
+window.audio_getInputAsync = async function() {
     return await getVolumeAsync("@DEFAULT_SOURCE@")
 }
 
 // -------------------------------------- get input/output wrap
 
-window.getOutputVolume = function() {
+window.audio_getOutputVolume = function() {
     return getVolume("@DEFAULT_SINK@").volume
 }
 
-window.getInputVolume = function() {
+window.audio_getInputVolume = function() {
     return getVolume("@DEFAULT_SOURCE@").volume
 }
 
-window.getOutputMuted = function() {
+window.audio_getOutputMuted = function() {
     return getVolume("@DEFAULT_SINK@").muted
 }
 
-window.getInputMuted = function() {
+window.audio_getInputMuted = function() {
     return getVolume("@DEFAULT_SOURCE@").muted
 }
 
 // async
 
-window.getOutputVolumeAsync = async function() {
+window.audio_getOutputVolumeAsync = async function() {
     return (await getVolumeAsync("@DEFAULT_SINK@")).volume
 }
 
-window.getInputVolumeAsync = async function() {
+window.audio_getInputVolumeAsync = async function() {
     return (await getVolumeAsync("@DEFAULT_SOURCE@")).volume
 }
 
-window.getOutputMutedAsync = async function() {
+window.audio_getOutputMutedAsync = async function() {
     return (await getVolumeAsync("@DEFAULT_SINK@")).muted
 }
 
-window.getInputMutedAsync = async function() {
+window.audio_getInputMutedAsync = async function() {
     return (await getVolumeAsync("@DEFAULT_SOURCE@")).muted
 }
 
 // -------------------------------------- set input/output
 
-window.setOutputVolume = function(volume) {
-    exec(`wpctl set-volume @DEFAULT_SINK@ ${volume}`, (error, stdout, stderr) => {})
+window.audio_setOutputVolume = function(volume) {
+    return execPromise(`wpctl set-volume @DEFAULT_SINK@ ${volume}`)
 }
 
-window.setInputVolume = function(volume) {
-    exec(`wpctl set-volume @DEFAULT_SOURCE@ ${volume}`, (error, stdout, stderr) => {})
+window.audio_setInputVolume = function(volume) {
+    return execPromise(`wpctl set-volume @DEFAULT_SOURCE@ ${volume}`)
+}
+
+window.audio_setOutputMuted = function(muted) {
+    if (muted == true) muted = 1
+    if (muted == false) muted = 0
+    return execPromise(`wpctl set-mute @DEFAULT_SINK@ ${muted}`)
+}
+
+window.audio_setInputMuted = function(muted) {
+    if (muted == true) muted = 1
+    if (muted == false) muted = 0
+    return execPromise(`wpctl set-mute @DEFAULT_SOURCE@ ${muted}`)
 }
 
 })();
