@@ -2,28 +2,31 @@
 
 const tab = tab_create()
 
-const setOutputVolumeReduced = reduceNumberOfCalls(setOutputVolume)
-const setInputVolumeReduced = reduceNumberOfCalls(setInputVolume)
+const setOutputVolumeReduced = reduceNumberOfCalls(audio_setOutputVolume)
+const setInputVolumeReduced = reduceNumberOfCalls(audio_setInputVolume)
 
 // -------------------------- 
 
-const slider_outputVolume = createSlider(getOutputVolume())
+const slider_outputVolume = createSlider()
 slider_outputVolume.addEventListener("slide", detailWrap(setOutputVolumeReduced))
-slider_outputVolume.addEventListener("slideEnd", detailWrap(setOutputVolume))
+slider_outputVolume.addEventListener("slideEnd", detailWrap(audio_setOutputVolume))
 
-const slider_inputVolume = createSlider(getInputVolume())
+const slider_inputVolume = createSlider()
 slider_inputVolume.addEventListener("slide", detailWrap(setInputVolumeReduced))
-slider_inputVolume.addEventListener("slideEnd", detailWrap(setInputVolume))
+slider_inputVolume.addEventListener("slideEnd", detailWrap(audio_setInputVolume))
 
 // -------------------------- 
 
-function updateOutputSlider() {
-    slider_outputVolume.setValue(getOutputVolume())
+async function updateOutputSlider() {
+    slider_outputVolume.setValue(await audio_getOutputVolumeAsync())
 }
 
-function updateInputSlider() {
-    slider_inputVolume.setValue(getInputVolume())
+async function updateInputSlider() {
+    slider_inputVolume.setValue(await audio_getInputVolumeAsync())
 }
+
+updateOutputSlider()
+updateInputSlider()
 
 // -------------------------- 
 

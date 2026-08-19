@@ -90,20 +90,40 @@ window.audio_getInputMutedAsync = async function() {
 // -------------------------------------- set input/output
 
 window.audio_setOutputVolume = function(volume) {
-    return execPromise(`wpctl set-volume @DEFAULT_SINK@ ${volume}`)
+    execSync(`wpctl set-volume @DEFAULT_SINK@ ${volume}`)
 }
 
 window.audio_setInputVolume = function(volume) {
-    return execPromise(`wpctl set-volume @DEFAULT_SOURCE@ ${volume}`)
+    execSync(`wpctl set-volume @DEFAULT_SOURCE@ ${volume}`)
 }
 
 window.audio_setOutputMuted = function(muted) {
     if (muted == true) muted = 1
     if (muted == false) muted = 0
-    return execPromise(`wpctl set-mute @DEFAULT_SINK@ ${muted}`)
+    execSync(`wpctl set-mute @DEFAULT_SINK@ ${muted}`)
 }
 
 window.audio_setInputMuted = function(muted) {
+    if (muted == true) muted = 1
+    if (muted == false) muted = 0
+    execSync(`wpctl set-mute @DEFAULT_SOURCE@ ${muted}`)
+}
+
+window.audio_setOutputVolumeAsync = function(volume) {
+    return execPromise(`wpctl set-volume @DEFAULT_SINK@ ${volume}`)
+}
+
+window.audio_setInputVolumeAsync = function(volume) {
+    return execPromise(`wpctl set-volume @DEFAULT_SOURCE@ ${volume}`)
+}
+
+window.audio_setOutputMutedAsync = function(muted) {
+    if (muted == true) muted = 1
+    if (muted == false) muted = 0
+    return execPromise(`wpctl set-mute @DEFAULT_SINK@ ${muted}`)
+}
+
+window.audio_setInputMutedAsync = function(muted) {
     if (muted == true) muted = 1
     if (muted == false) muted = 0
     return execPromise(`wpctl set-mute @DEFAULT_SOURCE@ ${muted}`)
