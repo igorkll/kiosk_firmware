@@ -95,7 +95,16 @@ function insertAt(parent, newElement, index) {
 function reduceNumberOfCalls(callback, minCallDelay=100) {
     let currentValue = null
     let oldValue = null
+    let oldCallUpdate = null
     let callLaterTimeoutId = null
+
+    let callCallback = () => {
+        if (currentValue != oldValue) {
+            callback(currentValue)
+            oldValue = currentValue
+            oldCallUpdate = getUptimeMs()
+        }
+    }
 
     return (value) => {
         const currentTime = getUptimeMs()
@@ -103,12 +112,16 @@ function reduceNumberOfCalls(callback, minCallDelay=100) {
         if (value != currentValue) {
             currentValue = value
             
-            
+            if (callLaterTimeoutId != null) {
+                clearTimeout(callLaterTimeoutId)
+                callLaterTimeoutId = null
+            }
 
-            if (callLaterTimeoutId != null) clearTimeout(callLaterTimeoutId)
-            callLaterTimeoutId = setTimeout(() => {
-                callback(currentValue)
-            }, minCallDelay)
+            if (oldCallUpdate == null || currentTime - oldCallUpdate >= minCallDelay) {
+                callCallback()
+            } else {
+                callLaterTimeoutId = setTimeout(callCallback, minCallDelay)
+            }
         }
     }
 }
