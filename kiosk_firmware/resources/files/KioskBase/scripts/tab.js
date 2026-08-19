@@ -150,11 +150,11 @@ window.tab_createSlider = function(container, parameter, onChangeCallback=null) 
     sliderObject.addEventListener("slide", (event) => {
         value = event.detail
         storage.set(parameter, value)
-        onChangeCallback(value, false)
+        onChangeCallback()
     })
 
     document.addEventListener("pointerup", () => {
-        onChangeCallback(value, true)
+        onChangeCallback()
     })
 }
 

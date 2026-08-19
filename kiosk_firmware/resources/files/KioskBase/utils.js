@@ -72,7 +72,7 @@ function keyHoldTrigger(callback, triggerActiveTime=5000, triggerResetTime=150) 
     let lastTriggerResetedTimeMs = null
 
     return () => {
-        let currentTime = getUptimeMs()
+        const currentTime = getUptimeMs()
 
         if (lastTriggerResetedTimeMs == null || currentTime - lastTriggerTimeMs > triggerResetTime) {
             lastTriggerResetedTimeMs = currentTime
@@ -90,4 +90,25 @@ function keyHoldTrigger(callback, triggerActiveTime=5000, triggerResetTime=150) 
 function insertAt(parent, newElement, index) {
     const reference = parent.children[index] || null;
     parent.insertBefore(newElement, reference);
+}
+
+function reduceNumberOfCalls(callback, minCallDelay=100) {
+    let currentValue = null
+    let oldValue = null
+    let callLaterTimeoutId = null
+
+    return (value) => {
+        const currentTime = getUptimeMs()
+
+        if (value != currentValue) {
+            currentValue = value
+            
+            
+
+            if (callLaterTimeoutId != null) clearTimeout(callLaterTimeoutId)
+            callLaterTimeoutId = setTimeout(() => {
+                callback(currentValue)
+            }, minCallDelay)
+        }
+    }
 }
