@@ -21,7 +21,7 @@ async function getVolumeAsync(device) {
     }
 }
 
-async function getVolume(device) {
+function getVolume(device) {
     try {
         const stdout = execSync(`wpctl get-volume ${device}`, {encoding: 'utf8'})
         return parseVolume(stdout)
@@ -72,19 +72,19 @@ window.getInputMuted = function() {
 // async
 
 window.getOutputVolumeAsync = async function() {
-    return await getVolumeAsync("@DEFAULT_SINK@").volume
+    return (await getVolumeAsync("@DEFAULT_SINK@")).volume
 }
 
 window.getInputVolumeAsync = async function() {
-    return await getVolumeAsync("@DEFAULT_SOURCE@").volume
+    return (await getVolumeAsync("@DEFAULT_SOURCE@")).volume
 }
 
 window.getOutputMutedAsync = async function() {
-    return await getVolumeAsync("@DEFAULT_SINK@").muted
+    return (await getVolumeAsync("@DEFAULT_SINK@")).muted
 }
 
 window.getInputMutedAsync = async function() {
-    return await getVolumeAsync("@DEFAULT_SOURCE@").muted
+    return (await getVolumeAsync("@DEFAULT_SOURCE@")).muted
 }
 
 // -------------------------------------- set input/output
