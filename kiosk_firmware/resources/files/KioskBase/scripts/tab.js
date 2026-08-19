@@ -1,7 +1,19 @@
 (function() {
 
-const overlay_buttons = document.getElementById("overlay-buttons")
+const overlay_buttons_host = document.getElementById("overlay-buttons-host")
 const overlay_tabs = document.getElementById("overlay-tabs")
+
+let maxButtonsInLine = 3
+
+function addButtonToLine(button) {
+    let lastLine = overlay_buttons_host.lastElementChild
+    if (lastLine == null || lastLine.children.length >= maxButtonsInLine) {
+        lastLine = document.createElement("div")
+        lastLine.classList.add("line-container")
+        overlay_buttons_host.appendChild(lastLine)
+    }
+    lastLine.appendChild(button)
+}
 
 let allTabs = []
 let oldActiveTabIndex = null
@@ -16,6 +28,8 @@ window.selectKioskSetupTab = function(index) {
     let tab = allTabs[index]
     tab.style.display = ""
     tab.active_button.classList.add("tab-button-selected")
+
+    
     
     oldActiveTabIndex = index
 }
@@ -25,18 +39,19 @@ window.addKioskSetupTab = function(name, tab) {
     let button = document.createElement("button")
     button.classList.add("tab-button")
     button.textContent = name
+
+    addButtonToLine(button)
     
     const index = lastIndex
     lastIndex++
 
-    insertAt(overlay_buttons, button, index)
-    
     button.addEventListener("click", () => {
         selectKioskSetupTab(index)
     })
 
     tab.style.display = "none"
     tab.active_button = button
+    tab.last_line = overlay_buttons_host.lastElementChild
     overlay_tabs.appendChild(tab)
     allTabs.push(tab)
 
