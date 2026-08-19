@@ -23,4 +23,5 @@ there are several ways to get into the setup window:
 * enabling/hiding waiting for a website to load
 * menu for setting the RTC clock, enabling and disabling NTP, and setting the time zone
 * the ability to set an administrator password to access the settings menu
+### completed
 * make the settings menu close automatically after 10 seconds of inactivity when the menu is open
