@@ -44,6 +44,7 @@ window.createSlider = function(value) {
     })
 
     document.addEventListener("pointerup", () => {
+        if (isPointing) slider.dispatchEvent(new CustomEvent("slideEnd", {detail: value}))
         isPointing = false
     })
 

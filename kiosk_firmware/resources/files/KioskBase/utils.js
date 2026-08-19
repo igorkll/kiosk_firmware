@@ -125,3 +125,9 @@ function reduceNumberOfCalls(callback, minCallDelay=100) {
         }
     }
 }
+
+function detailWrap(callback) {
+    return (event) => {
+        return callback(event.detail)
+    }
+}

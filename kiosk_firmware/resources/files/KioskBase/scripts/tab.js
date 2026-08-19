@@ -153,7 +153,7 @@ window.tab_createSlider = function(container, parameter, onChangeCallback=null) 
         onChangeCallback(false)
     })
 
-    document.addEventListener("pointerup", () => {
+    document.addEventListener("slideEnd", () => {
         onChangeCallback(true)
     })
 }
