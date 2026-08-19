@@ -99,7 +99,7 @@ function reduceNumberOfCalls(callback, minCallDelay=100) {
     let callLaterTimeoutId = null
 
     let callCallback = () => {
-        if (currentValue != oldValue) {
+        if (currentValue == null || currentValue != oldValue) {
             callback(currentValue)
             oldValue = currentValue
             oldCallUpdate = getUptimeMs()
@@ -109,7 +109,7 @@ function reduceNumberOfCalls(callback, minCallDelay=100) {
     return (value) => {
         const currentTime = getUptimeMs()
 
-        if (value != currentValue) {
+        if (value == null || value != currentValue) {
             currentValue = value
             
             if (callLaterTimeoutId != null) {

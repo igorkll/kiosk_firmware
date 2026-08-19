@@ -2,12 +2,22 @@
 
 const tab = tab_create()
 
-tab_createSlider(tab, "outputVolume", () => {
-    updateVolume()
+const updateVolumeReduced = reduceNumberOfCalls(updateVolume)
+
+function volumeSliderHandle(released) {
+    if (released) {
+        updateVolume()
+    } else {
+        updateVolumeReduced()
+    }
+}
+
+tab_createSlider(tab, "outputVolume", (released) => {
+    volumeSliderHandle(released)
 })
 
-tab_createSlider(tab, "inputVolume", () => {
-    updateVolume()
+tab_createSlider(tab, "inputVolume", (released) => {
+    volumeSliderHandle(released)
 })
 
 addKioskSetupTab("Audio", tab)
