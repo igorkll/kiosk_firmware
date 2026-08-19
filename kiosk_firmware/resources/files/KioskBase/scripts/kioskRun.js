@@ -5,6 +5,7 @@ updateDefaultInStorage("sessionTimeoutEnabled", false)
 updateDefaultInStorage("sessionTemp", false)
 updateDefaultInStorage("sessionTimeout", 60)
 updateDefaultInStorage("startTimerOnInteraction", true)
+updateDefaultInStorage("rootAccessForTheWebsite", false)
 
 // ----------------------------------------------
 
@@ -57,6 +58,12 @@ window.recreateWebview = function(newPartition=null) {
     newWebview.preload="scripts/webview_preload.js"
     newWebview.style.display = webviewShowState ? "flex" : "none"
 
+    let rootAccessForTheWebsite = storage.get("rootAccessForTheWebsite", false)
+    if (rootAccessForTheWebsite) {
+        newWebview.setAttribute("nodeintegration", "")
+        newWebview.setAttribute("webpreferences", "contextIsolation=no")
+    }
+
     newWebview.addEventListener('ipc-message', (event) => {
         if (event.channel === 'user_interaction') {
             document.dispatchEvent(new CustomEvent('user_interaction'))
@@ -64,9 +71,9 @@ window.recreateWebview = function(newPartition=null) {
     })
 
     newWebview.addEventListener('dom-ready', () => {
-        //newWebview.openDevTools()
+        newWebview.openDevTools()
         webview.executeJavaScript("codeInWebview = true;\n" + user_interaction_code)
-    });
+    })
 
     document.body.appendChild(newWebview)
     webview = newWebview

@@ -1,5 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('kiosk_firmware_internals', {
+const api = {
     user_interaction: () => ipcRenderer.sendToHost('user_interaction')
-})
+}
+
+if (process.contextIsolated) {
+    contextBridge.exposeInMainWorld('kiosk_firmware_internals', api)
+} else {
+    window.kiosk_firmware_internals = api
+}
