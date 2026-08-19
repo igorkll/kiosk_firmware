@@ -9,22 +9,33 @@ function parseVolume(stdout) {
     }
 }
 
-async function getVolume(device) {
+async function getVolumeAsync(device) {
     try {
-        const stdout = await execPromise(`wpctl get-volume ${device}`);
+        const {stdout} = await execPromise(`wpctl get-volume ${device}`);
         return parseVolume(stdout);
     } catch (error) {
         console.error(`Failed get volume for device "${device}":`, error);
         return { volume: 0, muted: false };
     }
-};
+}
+
+async function getVolume(device) {
+    try {
+        const stdout = execSync(`wpctl get-volume ${device}`);
+        console.log(stdout)
+        return parseVolume(stdout);
+    } catch (error) {
+        console.error(`Failed get volume for device "${device}":`, error);
+        return { volume: 0, muted: false };
+    }
+}
 
 window.getOutputVolume = function() {
-    return 0.4
+    return getVolume("@DEFAULT_SINK@")
 }
 
 window.getInputVolume = function() {
-    return 1
+    return getVolume("@DEFAULT_SOURCE@")
 }
 
 window.setOutputVolume = function(volume) {
