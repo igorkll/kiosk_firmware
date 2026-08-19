@@ -19,3 +19,5 @@ there are several ways to get into the setup window:
 * the ability to activate full access to the kiosk system (including root rights) for the site with a single check mark. This will be a big security hole, but it will allow you to, for example, connect to payment terminals
 * the ability to save/load configuration from a USB flash drive
 * the ability to update the system from a USB flash drive without reinstalling, through the built-in update mechanism in gnubox maker (self_update)
+* enabling/hiding the internet connection waiting display
+* enabling/hiding waiting for a website to load
