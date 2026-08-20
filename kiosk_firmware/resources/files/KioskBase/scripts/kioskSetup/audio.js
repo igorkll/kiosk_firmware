@@ -40,14 +40,14 @@ window.splitIdsAndNames = function(arr) {
 let outputsListElement = null
 let inputsListElement = null
 
-async function createAudioDeviceSelecter() {
-    const list = splitIdsAndNames(await audio_getOutputsListAsync())
-    const currentOutput = await audio_getDefaultOutputAsync()
+async function createAudioDeviceSelecter(deviceType, title) {
+    const list = splitIdsAndNames(await audio_getAnyListAsync(deviceType))
+    const currentOutput = await audio_getDefaultAnyAsync(deviceType)
 
     const names = list.names
     const ids = list.ids
 
-    return tab_createLabel(tab, "Outputs list", createDropdownSimple(names, currentOutput, (_, index) => {
+    return tab_createLabel(tab, title + " list", createDropdownSimple(names, currentOutput, (_, index) => {
         audio_setDefaultAsync(ids[index])
     }))
 }
@@ -56,8 +56,8 @@ async function recreateDevicesLists() {
     if (outputsListElement != null) outputsListElement.remove()
     if (inputsListElement != null) inputsListElement.remove()
 
-    outputsListElement = createAudioDeviceSelecter()
-    inputsListElement = createAudioDeviceSelecter()
+    outputsListElement = await createAudioDeviceSelecter("sink", "Outputs")
+    inputsListElement = await createAudioDeviceSelecter("source", "Inputs")
 }
 
 recreateDevicesLists()

@@ -268,6 +268,20 @@ window.audio_getInputsList = function() {
     }
 };
 
+function convertDeviceTypeToListType(deviceType) {
+    return tocase.sentenceCase(deviceType) + "s"
+}
+
+window.audio_getAnyList = function(deviceType) {
+    try {
+        const stdout = execSync('wpctl status', {encoding: 'utf8'});
+        return parseDeviceList(stdout, convertDeviceTypeToListType(deviceType));
+    } catch (error) {
+        console.error(`Failed to get ${deviceType}:`, error);
+        return [];
+    }
+};
+
 // async
 window.audio_getOutputsListAsync = async function() {
     try {
@@ -285,6 +299,16 @@ window.audio_getInputsListAsync = async function() {
         return parseDeviceList(stdout, 'Sources');
     } catch (error) {
         console.error('Failed to get sources async:', error);
+        return [];
+    }
+};
+
+window.audio_getAnyListAsync = async function(deviceType) {
+    try {
+        const {stdout} = await execPromise('wpctl status');
+        return parseDeviceList(stdout, convertDeviceTypeToListType(deviceType));
+    } catch (error) {
+        console.error(`Failed to get ${deviceType} async:`, error);
         return [];
     }
 };

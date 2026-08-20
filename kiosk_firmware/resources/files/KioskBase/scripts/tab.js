@@ -139,11 +139,11 @@ window.tab_createLabel = function(container, title, forElement=null) {
         parameterLine.appendChild(forElement)
         parameterLine.appendChild(labelObject)
         container.appendChild(parameterLine)
+        return parameterLine
     } else {
         container.appendChild(labelObject)
+        return labelObject
     }
-
-    return labelObject
 }
 
 window.tab_createSlider = function(container, parameter, onChangeCallback=null, title=null) {
