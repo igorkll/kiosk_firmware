@@ -37,6 +37,8 @@ window.splitIdsAndNames = function(arr) {
     }
 }
 
+let outputsListElement = null
+
 async function recreateDevicesLists() {
     const outputsList = splitIdsAndNames(await audio_getOutputsListAsync())
     const currentOutput = await audio_getDefaultOutputAsync()
@@ -44,7 +46,9 @@ async function recreateDevicesLists() {
     const outputNames = outputsList.names
     const outputIds = outputsList.ids
 
-    tab_createLabel(tab, "Outputs list", createDropdownSimple(outputNames, currentOutput))
+    outputsListElement = tab_createLabel(tab, "Outputs list", createDropdownSimple(outputNames, currentOutput, (_, index) => {
+        audio_setDefaultOutputAsync(outputIds[index])
+    }))
 }
 
 recreateDevicesLists()
