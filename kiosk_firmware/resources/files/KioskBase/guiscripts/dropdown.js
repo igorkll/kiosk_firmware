@@ -2,7 +2,7 @@
 
 // -------------------------------------- dropdown (без storage)
 
-window.createDropdownSimple = function(options, defaultIndex = -1, onChangeCallback = null, title = null) {
+window.createDropdownSimple = function(options, defaultIndex = -1, onChangeCallback = null) {
     // options: массив строк или объектов { label, value }
     const normalizedOptions = options.map(opt =>
         typeof opt === 'string' ? { label: opt, value: opt } : opt

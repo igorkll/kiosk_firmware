@@ -30,8 +30,21 @@ updateInputSlider()
 
 // --------------------------
 
+window.splitIdsAndNames = function(arr) {
+    return {
+        ids: arr.map(item => item.id),
+        names: arr.map(item => item.name)
+    }
+}
+
 async function recreateDevicesLists() {
-    tab_createLabel(tab, "Outputs list", createDropdownSimple())
+    const outputsList = splitIdsAndNames(await audio_getOutputsListAsync())
+    const currentOutput = await audio_getDefaultOutputAsync()
+
+    const outputNames = outputsList.names
+    const outputIds = outputsList.ids
+
+    tab_createLabel(tab, "Outputs list", createDropdownSimple(outputNames, currentOutput))
 }
 
 recreateDevicesLists()
