@@ -159,7 +159,7 @@ window.kioskAutoRun = function() {
 }
 
 window.kioskFirstRun = function() {
-    if (storage.get("checkInternetShowFirstProcess", false) || storage.get("checkInternetEnable", false)) {
+    if (storage.get("checkInternetShowFirstProcess", false) && storage.get("checkInternetEnable", false)) {
         loading_process.style.display = "flex"
     }
 
