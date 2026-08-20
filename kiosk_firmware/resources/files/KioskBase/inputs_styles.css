@@ -83,3 +83,20 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
 }
+
+/* ----------------------------- DROPDOWN ----------------------------- */
+
+select {
+    appearance: none;
+
+    width: 50%;
+    height: 30px;
+
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 4px;
+
+    padding: 4px;
+}
+
+

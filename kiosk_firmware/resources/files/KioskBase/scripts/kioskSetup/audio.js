@@ -47,7 +47,7 @@ async function createAudioDeviceSelecter(deviceType, callback, title) {
     const names = list.names
     const ids = list.ids
 
-    return tab_createLabel(tab, title + " list", createDropdownSimple(names, current, async (_, index) => {
+    return tab_createLabel(tab, title + " list", createDropdownSimple(names, ids.findIndex(s => s === current.id), async (_, index) => {
         await audio_setDefaultAsync(ids[index])
         callback()
     }))
@@ -62,7 +62,6 @@ async function recreateDevicesLists() {
 }
 
 recreateDevicesLists()
-setTimeout(recreateDevicesLists, 3000)
 
 // --------------------------
 

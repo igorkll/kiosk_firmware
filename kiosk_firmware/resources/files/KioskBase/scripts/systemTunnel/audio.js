@@ -178,46 +178,14 @@ window.audio_getDefaultAny = function(deviceType) {
 }
 
 window.audio_getDefaultOutput = function() {
-    try {
-        const stdout = execSync('wpctl status', { encoding: 'utf8' });
-        return parseDefaultDeviceFromStatus(stdout, 'Sinks');
-    } catch (error) {
-        console.error('Failed to get default sink:', error);
-        return null;
-    }
+    return audio_getDefaultAny("sink")
 }
 
 window.audio_getDefaultInput = function() {
-    try {
-        const stdout = execSync('wpctl status', { encoding: 'utf8' });
-        return parseDefaultDeviceFromStatus(stdout, 'Sources');
-    } catch (error) {
-        console.error('Failed to get default source:', error);
-        return null;
-    }
+    return audio_getDefaultAny("source")
 }
 
-// async versions (используют execPromise)
-window.audio_getDefaultOutputAsync = async function() {
-    try {
-        const { stdout } = await execPromise('wpctl status');
-        return parseDefaultDeviceFromStatus(stdout, 'Sinks');
-    } catch (error) {
-        console.error('Failed to get default sink async:', error);
-        return null;
-    }
-};
-
-window.audio_getDefaultInputAsync = async function() {
-    try {
-        const { stdout } = await execPromise('wpctl status');
-        return parseDefaultDeviceFromStatus(stdout, 'Sources');
-    } catch (error) {
-        console.error('Failed to get default source async:', error);
-        return null;
-    }
-};
-
+// async
 window.audio_getDefaultAnyAsync = async function(deviceType) {
     try {
         const { stdout } = await execPromise('wpctl status');
@@ -226,7 +194,15 @@ window.audio_getDefaultAnyAsync = async function(deviceType) {
         console.error(`Failed to get default ${deviceType} async:`, error);
         return null;
     }
-};
+}
+
+window.audio_getDefaultOutputAsync = async function() {
+    return audio_getDefaultAnyAsync("sink")
+}
+
+window.audio_getDefaultInputAsync = async function() {
+    return audio_getDefaultAnyAsync("source")
+}
 
 // -------------------------------------- list devices
 
