@@ -21,7 +21,6 @@ there are several ways to get into the setup window:
 ## roadmap
 * Raspberry Pi x64 support (this is currently working, but without GPU acceleration due to a bug in Weston)
 * the menu for connecting to wifi. to avoid the need to use nmcli in the terminal
-* selecting audio output and audio input in the GUI
 * the ability to save/load configuration from a USB flash drive
 * the ability to update the system from a USB flash drive without reinstalling, through the built-in update mechanism in gnubox maker (self_update)
 * enabling/hiding the internet connection waiting display
@@ -33,3 +32,4 @@ there are several ways to get into the setup window:
 ### completed
 * make the settings menu close automatically after 10 seconds of inactivity when the menu is open
 * the ability to activate full access to the kiosk system (including root rights) for the site with a single check mark. This will be a big security hole, but it will allow you to, for example, connect to payment terminals
+* selecting audio output and audio input in the GUI
