@@ -160,6 +160,16 @@ window.audio_getDefaultInput = function() {
     }
 };
 
+window.audio_getDefaultAny = function(deviceType) {
+    try {
+        const stdout = execSync(`wpctl get-default ${deviceType}`, {encoding: 'utf8'});
+        return parseDefaultDevice(stdout);
+    } catch (error) {
+        console.error(`Failed to get default ${deviceType}:`, error);
+        return null;
+    }
+};
+
 // async versions
 window.audio_getDefaultOutputAsync = async function() {
     try {
@@ -177,6 +187,16 @@ window.audio_getDefaultInputAsync = async function() {
         return parseDefaultDevice(stdout);
     } catch (error) {
         console.error('Failed to get default source async:', error);
+        return null;
+    }
+};
+
+window.audio_getDefaultAnyAsync = async function(deviceType) {
+    try {
+        const {stdout} = await execPromise(`wpctl get-default ${deviceType}`);
+        return parseDefaultDevice(stdout);
+    } catch (error) {
+        console.error(`Failed to get default ${deviceType} async:`, error);
         return null;
     }
 };
@@ -271,7 +291,7 @@ window.audio_getInputsListAsync = async function() {
 
 // -------------------------------------- set default device
 
-window.audio_setDefaultOutput = function(id) {
+window.audio_setDefault = function(id) {
     try {
         execSync(`wpctl set-default ${id}`);
     } catch (error) {
@@ -279,20 +299,8 @@ window.audio_setDefaultOutput = function(id) {
     }
 };
 
-window.audio_setDefaultInput = function(id) {
-    try {
-        execSync(`wpctl set-default ${id}`);
-    } catch (error) {
-        console.error(`Failed to set default source to ${id}:`, error);
-    }
-};
-
 // async
-window.audio_setDefaultOutputAsync = function(id) {
-    return execPromise(`wpctl set-default ${id}`)
-};
-
-window.audio_setDefaultInputAsync = function(id) {
+window.audio_setDefaultAsync = function(id) {
     return execPromise(`wpctl set-default ${id}`)
 };
 
