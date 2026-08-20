@@ -7,7 +7,9 @@ updateDefaultInStorage("checkInternetPeriodTimer", 10)
 updateDefaultInStorage("checkInternetTimeout", 3)
 
 let hasInternet = null
-    
+let updateInternetStatusIntervalId = null
+let currentWaitId = 0
+   
 async function checkInternet() {
     try {
         const controller = new AbortController()
@@ -24,18 +26,21 @@ async function checkInternet() {
     }
 }
 
-async function updateInternetStatus() {
+async function updateInternetStatus(waitId) {
     console.log("checking internet...")
     const nowHas = await checkInternet()
     console.log("internet state", nowHas)
+
+    if (waitId !== currentWaitId) {
+        console.log("changed wait id")
+        return
+    }
 
     if (nowHas !== hasInternet) {
         hasInternet = nowHas
         setKioskState(hasInternet)
     }
 }
-
-let updateInternetStatusIntervalId = null
 
 window.updateLoadingProcess = function() {
     if (updateInternetStatusIntervalId != null) {
@@ -47,17 +52,19 @@ window.updateLoadingProcess = function() {
 
     if (storage.get("checkInternetEnable")) {
         if (storage.get("url").startsWith("file:")) {
+            currentWaitId++
             console.log("show webview for file")
             setKioskState(true)
         } else {
             console.log("check internet enable. start interval")
             updateInternetStatusIntervalId = setInterval(() => {
                 updateInternetStatusIntervalId = null
-                updateInternetStatus()
+                updateInternetStatus(++currentWaitId)
             }, storage.get("checkInternetPeriodTimer") * 1000)
-            updateInternetStatus()
+            updateInternetStatus(++currentWaitId)
         }
     } else {
+        currentWaitId++
         console.log("check internet disabled")
         setKioskState(true)
     }
