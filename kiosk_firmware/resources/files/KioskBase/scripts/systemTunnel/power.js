@@ -16,8 +16,4 @@ window.power_shutdownAsync = function() {
     return execPromise("/sbin/poweroff")
 }
 
-window.power_openTerminalAsync = function() {
-    return execPromise("weston-terminal")
-}
-
 })();

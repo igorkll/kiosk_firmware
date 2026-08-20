@@ -93,6 +93,8 @@ window.openDevTools = function() {
 }
 
 function rawRunKiosk(url=null, sessionTemp=false) {
+    system_clearClipboard()
+    
     let partition
     if (sessionTemp) {
         partition = `temp-${Date.now()}-${Math.random()}`

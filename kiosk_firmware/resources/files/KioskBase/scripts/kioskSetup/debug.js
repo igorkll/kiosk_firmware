@@ -3,7 +3,7 @@
 const tab = tab_create()
 tab.style.alignItems = "center"
 
-tab_createButton(tab, "Debug terminal", power_openTerminalAsync)
+tab_createButton(tab, "Debug terminal", system_openTerminalAsync)
 tab_createButton(tab, "Open website devtools", () => {
     openDevTools()
 })
