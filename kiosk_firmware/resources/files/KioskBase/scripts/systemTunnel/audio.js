@@ -31,6 +31,10 @@ function getVolume(device) {
     }
 }
 
+function convertDeviceTypeToListType(deviceType) {
+    return tocase.sentenceCase(deviceType) + "s"
+}
+
 // -------------------------------------- get input/output
 
 window.audio_getOutput = function() {
@@ -131,50 +135,73 @@ window.audio_setInputMutedAsync = function(muted) {
 
 // -------------------------------------- get default devices
 
-function parseDefaultDevice(stdout) {
-    // Пример: "Default sink: id:49, name:alsa_output.pci-0000_00_1f.3.analog-stereo"
-    const match = stdout.match(/id:(\d+),\s*name:([^,\n]+)/);
-    if (match) {
-        return { id: parseInt(match[1]), name: match[2].trim() };
+function parseDefaultDeviceFromStatus(stdout, type) {
+    // type: 'Sinks' или 'Sources'
+    const lines = stdout.split('\n');
+    let inSection = false;
+
+    for (const line of lines) {
+        // Ищем начало секции "├─ Sinks:" или "├─ Sources:"
+        if (line.includes(`├─ ${type}:`)) {
+            inSection = true;
+            continue;
+        }
+
+        if (inSection) {
+            // Если встретили другую секцию – выходим
+            if (line.includes('├─') || line.includes('└─') || line.trim() === '' || line.includes('endpoints:')) {
+                break;
+            }
+
+            // Ищем строку с звёздочкой, например "│  *   46. имя"
+            const match = line.match(/^\s*│\s*\*\s*(\d+)\.\s*(.+?)(?:\s*\[.*\])?$/);
+            if (match) {
+                return {
+                    id: parseInt(match[1]),
+                    name: match[2].trim()
+                };
+            }
+        }
     }
-    return null;
+
+    return null; // не найдено дефолтного устройства
 }
-
-window.audio_getDefaultOutput = function() {
-    try {
-        const stdout = execSync('wpctl get-default sink', {encoding: 'utf8'});
-        return parseDefaultDevice(stdout);
-    } catch (error) {
-        console.error('Failed to get default sink:', error);
-        return null;
-    }
-};
-
-window.audio_getDefaultInput = function() {
-    try {
-        const stdout = execSync('wpctl get-default source', {encoding: 'utf8'});
-        return parseDefaultDevice(stdout);
-    } catch (error) {
-        console.error('Failed to get default source:', error);
-        return null;
-    }
-};
 
 window.audio_getDefaultAny = function(deviceType) {
     try {
-        const stdout = execSync(`wpctl get-default ${deviceType}`, {encoding: 'utf8'});
-        return parseDefaultDevice(stdout);
+        const stdout = execSync('wpctl status', { encoding: 'utf8' });
+        return parseDefaultDeviceFromStatus(stdout, convertDeviceTypeToListType(deviceType));
     } catch (error) {
         console.error(`Failed to get default ${deviceType}:`, error);
         return null;
     }
-};
+}
 
-// async versions
+window.audio_getDefaultOutput = function() {
+    try {
+        const stdout = execSync('wpctl status', { encoding: 'utf8' });
+        return parseDefaultDeviceFromStatus(stdout, 'Sinks');
+    } catch (error) {
+        console.error('Failed to get default sink:', error);
+        return null;
+    }
+}
+
+window.audio_getDefaultInput = function() {
+    try {
+        const stdout = execSync('wpctl status', { encoding: 'utf8' });
+        return parseDefaultDeviceFromStatus(stdout, 'Sources');
+    } catch (error) {
+        console.error('Failed to get default source:', error);
+        return null;
+    }
+}
+
+// async versions (используют execPromise)
 window.audio_getDefaultOutputAsync = async function() {
     try {
-        const {stdout} = await execPromise('wpctl get-default sink');
-        return parseDefaultDevice(stdout);
+        const { stdout } = await execPromise('wpctl status');
+        return parseDefaultDeviceFromStatus(stdout, 'Sinks');
     } catch (error) {
         console.error('Failed to get default sink async:', error);
         return null;
@@ -183,8 +210,8 @@ window.audio_getDefaultOutputAsync = async function() {
 
 window.audio_getDefaultInputAsync = async function() {
     try {
-        const {stdout} = await execPromise('wpctl get-default source');
-        return parseDefaultDevice(stdout);
+        const { stdout } = await execPromise('wpctl status');
+        return parseDefaultDeviceFromStatus(stdout, 'Sources');
     } catch (error) {
         console.error('Failed to get default source async:', error);
         return null;
@@ -193,8 +220,8 @@ window.audio_getDefaultInputAsync = async function() {
 
 window.audio_getDefaultAnyAsync = async function(deviceType) {
     try {
-        const {stdout} = await execPromise(`wpctl get-default ${deviceType}`);
-        return parseDefaultDevice(stdout);
+        const { stdout } = await execPromise('wpctl status');
+        return parseDefaultDeviceFromStatus(stdout, convertDeviceTypeToListType(deviceType));
     } catch (error) {
         console.error(`Failed to get default ${deviceType} async:`, error);
         return null;
@@ -248,30 +275,6 @@ function parseDeviceList(stdout, type) {
     return devices;
 }
 
-window.audio_getOutputsList = function() {
-    try {
-        const stdout = execSync('wpctl status', {encoding: 'utf8'});
-        return parseDeviceList(stdout, 'Sinks');
-    } catch (error) {
-        console.error('Failed to get sinks:', error);
-        return [];
-    }
-};
-
-window.audio_getInputsList = function() {
-    try {
-        const stdout = execSync('wpctl status', {encoding: 'utf8'});
-        return parseDeviceList(stdout, 'Sources');
-    } catch (error) {
-        console.error('Failed to get sources:', error);
-        return [];
-    }
-};
-
-function convertDeviceTypeToListType(deviceType) {
-    return tocase.sentenceCase(deviceType) + "s"
-}
-
 window.audio_getAnyList = function(deviceType) {
     try {
         const stdout = execSync('wpctl status', {encoding: 'utf8'});
@@ -282,26 +285,15 @@ window.audio_getAnyList = function(deviceType) {
     }
 };
 
-// async
-window.audio_getOutputsListAsync = async function() {
-    try {
-        const {stdout} = await execPromise('wpctl status');
-        return parseDeviceList(stdout, 'Sinks');
-    } catch (error) {
-        console.error('Failed to get sinks async:', error);
-        return [];
-    }
+window.audio_getOutputsList = function() {
+    return audio_getAnyList("sink")
 };
 
-window.audio_getInputsListAsync = async function() {
-    try {
-        const {stdout} = await execPromise('wpctl status');
-        return parseDeviceList(stdout, 'Sources');
-    } catch (error) {
-        console.error('Failed to get sources async:', error);
-        return [];
-    }
+window.audio_getInputsList = function() {
+    return audio_getAnyList("source")
 };
+
+// async
 
 window.audio_getAnyListAsync = async function(deviceType) {
     try {
@@ -311,7 +303,15 @@ window.audio_getAnyListAsync = async function(deviceType) {
         console.error(`Failed to get ${deviceType} async:`, error);
         return [];
     }
-};
+}
+
+window.audio_getOutputsListAsync = async function() {
+    return audio_getAnyListAsync("sink")
+}
+
+window.audio_getInputsListAsync = async function() {
+    return audio_getAnyListAsync("source")
+}
 
 // -------------------------------------- set default device
 
@@ -319,7 +319,7 @@ window.audio_setDefault = function(id) {
     try {
         execSync(`wpctl set-default ${id}`);
     } catch (error) {
-        console.error(`Failed to set default sink to ${id}:`, error);
+        console.error(`Failed to set default device to ${id}:`, error);
     }
 };
 

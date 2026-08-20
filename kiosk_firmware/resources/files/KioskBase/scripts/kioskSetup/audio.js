@@ -44,8 +44,6 @@ async function createAudioDeviceSelecter(deviceType, callback, title) {
     const list = splitIdsAndNames(await audio_getAnyListAsync(deviceType))
     const current = await audio_getDefaultAnyAsync(deviceType)
 
-    console.log(current)
-
     const names = list.names
     const ids = list.ids
 
