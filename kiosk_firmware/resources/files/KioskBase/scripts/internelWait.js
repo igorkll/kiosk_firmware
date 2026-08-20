@@ -2,6 +2,7 @@
 
 updateDefaultInStorage("checkInternetEnable", true)
 updateDefaultInStorage("checkInternetShowProcess", true)
+updateDefaultInStorage("checkInternetShowFirstProcess", false)
 updateDefaultInStorage("checkInternetUrl", "https://google.com")
 updateDefaultInStorage("checkInternetPeriodTimer", 10)
 updateDefaultInStorage("checkInternetTimeout", 3)

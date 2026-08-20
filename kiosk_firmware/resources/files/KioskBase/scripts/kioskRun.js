@@ -94,7 +94,7 @@ window.openDevTools = function() {
 
 function rawRunKiosk(url=null, sessionTemp=false) {
     system_clearClipboard()
-    
+
     let partition
     if (sessionTemp) {
         partition = `temp-${Date.now()}-${Math.random()}`
@@ -159,6 +159,10 @@ window.kioskAutoRun = function() {
 }
 
 window.kioskFirstRun = function() {
+    if (storage.get("checkInternetShowFirstProcess", false) || storage.get("checkInternetEnable", false)) {
+        loading_process.style.display = "flex"
+    }
+
     document.addEventListener("user_interaction", sessionTimeoutReset)
     updateLoadingProcess()
 }
