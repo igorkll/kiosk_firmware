@@ -142,6 +142,8 @@ window.tab_createLabel = function(container, title, forElement=null) {
     } else {
         container.appendChild(labelObject)
     }
+
+    return labelObject
 }
 
 window.tab_createSlider = function(container, parameter, onChangeCallback=null, title=null) {

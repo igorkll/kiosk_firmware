@@ -28,7 +28,15 @@ async function updateInputSlider() {
 updateOutputSlider()
 updateInputSlider()
 
-// -------------------------- 
+// --------------------------
+
+async function recreateDevicesLists() {
+    tab_createLabel(tab, "Outputs list", createDropdownSimple())
+}
+
+recreateDevicesLists()
+
+// --------------------------
 
 tab_createLabel(tab, "Output volume", slider_outputVolume)
 tab_createLabel(tab, "Input volume", slider_inputVolume)
