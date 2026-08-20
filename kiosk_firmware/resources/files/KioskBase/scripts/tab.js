@@ -63,7 +63,7 @@ window.tab_create = function() {
     return tab
 }
 
-window.tab_createInput = function(container, parameter, onChangeCallback=null, min, max) {
+window.tab_createInput = function(container, parameter, onChangeCallback=null, min=null, max=null, title=null) {
     let parameterValue = storage.get(parameter)
     let parameterType = typeof(parameterValue)
 
@@ -116,7 +116,7 @@ window.tab_createInput = function(container, parameter, onChangeCallback=null, m
         onChangeCallback()
     })
 
-    tab_createLabel(container, tocase.sentenceCase(parameter), inputObject)
+    tab_createLabel(container, title || tocase.sentenceCase(parameter), inputObject)
 }
 
 window.tab_createButton = function(container, title, callback) {
@@ -144,20 +144,12 @@ window.tab_createLabel = function(container, title, forElement=null) {
     }
 }
 
-window.tab_createSlider = function(container, parameter, onChangeCallback=null) {
+window.tab_createSlider = function(container, parameter, onChangeCallback=null, title=null) {
     let value = storage.get(parameter)
-
-    const labelObject = document.createElement('label')
-    labelObject.textContent = tocase.sentenceCase(parameter)
-
     let sliderObject = createSlider(value)
-    
-    const parameterLine = document.createElement('div')
-    parameterLine.classList.add("line-container")
-    parameterLine.appendChild(sliderObject)
-    parameterLine.appendChild(labelObject)
 
     container.appendChild(parameterLine)
+    tab_createLabel(container, title || tocase.sentenceCase(parameter), sliderObject)
 
     sliderObject.addEventListener("slide", (event) => {
         value = event.detail
@@ -165,7 +157,7 @@ window.tab_createSlider = function(container, parameter, onChangeCallback=null) 
         onChangeCallback(false)
     })
 
-    document.addEventListener("slideEnd", () => {
+    sliderObject.addEventListener("slideEnd", () => {
         onChangeCallback(true)
     })
 }

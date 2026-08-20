@@ -43,6 +43,8 @@ body {
     height: 100%;
 
     cursor: none;
+
+    overflow: hidden;
 }
 
 .loading-process > img {

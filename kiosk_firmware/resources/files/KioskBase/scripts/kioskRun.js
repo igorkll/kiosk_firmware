@@ -28,7 +28,12 @@ window.setWebviewShowState = function(state) {
     webviewShowState = state
     if (webview != null) webview.style.display = state ? "flex" : "none"
     document.body.style.cursor = state ? "" : "none"
-    loading_process.style.display = state ? "none" : "flex"
+
+    if (storage.get("checkInternetShowProcess", false)) {
+        loading_process.style.display = state ? "none" : "flex"
+    } else {
+        loading_process.style.display = "none"
+    }
 }
 
 window.setKioskState = function(state) {

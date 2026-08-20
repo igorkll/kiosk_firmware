@@ -1,6 +1,7 @@
 (function() {
 
 updateDefaultInStorage("checkInternetEnable", true)
+updateDefaultInStorage("checkInternetShowProcess", true)
 updateDefaultInStorage("checkInternetUrl", "https://google.com")
 updateDefaultInStorage("checkInternetPeriodTimer", 10)
 updateDefaultInStorage("checkInternetTimeout", 3)
