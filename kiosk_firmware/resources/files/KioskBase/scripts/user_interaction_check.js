@@ -46,5 +46,6 @@
     document.addEventListener('touchmove', handlePointerMove, { passive: true })
     document.addEventListener('touchstart', handleOther)
     document.addEventListener('keydown', handleOther)
+    document.addEventListener('pointerdown', handleOther)
     document.addEventListener('wheel', handleOther)
 })();

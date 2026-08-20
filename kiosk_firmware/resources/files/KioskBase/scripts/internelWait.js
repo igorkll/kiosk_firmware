@@ -42,18 +42,21 @@ window.updateLoadingProcess = function() {
         updateInternetStatusIntervalId = null
     }
 
+    hasInternet = null
+
     if (storage.get("checkInternetEnable")) {
         if (storage.get("url").startsWith("file:")) {
-            hasInternet = null
             console.log("show webview for file")
             setKioskState(true)
         } else {
             console.log("check internet enable. start interval")
-            updateInternetStatusIntervalId = setInterval(updateInternetStatus, storage.get("checkInternetPeriodTimer") * 1000)
+            updateInternetStatusIntervalId = setInterval(() => {
+                updateInternetStatusIntervalId = null
+                updateInternetStatus()
+            }, storage.get("checkInternetPeriodTimer") * 1000)
             updateInternetStatus()
         }
     } else {
-        hasInternet = null
         console.log("check internet disabled")
         setKioskState(true)
     }
