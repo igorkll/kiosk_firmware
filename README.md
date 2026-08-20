@@ -29,6 +29,7 @@ there are several ways to get into the setup window:
 * menu for setting the RTC clock, enabling and disabling NTP, and setting the time zone
 * the ability to set an administrator password to access the settings menu
 * a menu with display settings and the ability to flip the display
+* add on-screen keyboard support
 ### completed
 * make the settings menu close automatically after 10 seconds of inactivity when the menu is open
 * the ability to activate full access to the kiosk system (including root rights) for the site with a single check mark. This will be a big security hole, but it will allow you to, for example, connect to payment terminals
