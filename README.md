@@ -1,6 +1,6 @@
 # Kiosk firmware
 ![preview](https://raw.githubusercontent.com/igorkll/kiosk_firmware/refs/heads/main/screenshots/1.1.png)  
-![preview](https://raw.githubusercontent.com/igorkll/kiosk_firmware/refs/heads/main/screenshots/2.png)  
+![preview](https://raw.githubusercontent.com/igorkll/kiosk_firmware/refs/heads/main/screenshots/2.1.png)  
 free open source OS for kiosks  
 used build system: https://github.com/igorkll/Gnubox-Maker  
 page for test website root access: https://igorkll.github.io/test/kiosk_firmware_website_root  
